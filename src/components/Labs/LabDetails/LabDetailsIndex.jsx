@@ -41,22 +41,30 @@ export class LabDetailsIndex extends React.Component
                     <div>
                         <h2>Actions</h2>
                         <div className='actions-container'>
-                            <div className='action-button'>
-                                <img src='/img/icons/start.svg' alt=''/>
-                                <div>Start</div>
-                            </div>
-                            <div className='action-button'>
-                                <img src='/img/icons/stop.svg' alt=''/>
-                                <div>Stop</div>
-                            </div>
-                            <div className='action-button'>
-                                <img src='/img/icons/restart.svg' alt=''/>
-                                <div>Restart</div>
-                            </div>
-                            <div className='action-button dangerous'>
-                                <img src='/img/icons/delete.svg' alt=''/>
-                                <div>Delete</div>
-                            </div>
+                            <button>
+                                <div className='action-button'>
+                                    <img src='/img/icons/start.svg' alt=''/>
+                                    <div>Start</div>
+                                </div>
+                            </button>
+                            <button>
+                                <div className='action-button'>
+                                    <img src='/img/icons/stop.svg' alt=''/>
+                                    <div>Stop</div>
+                                </div>
+                            </button>
+                            <button>
+                                <div className='action-button'>
+                                    <img src='/img/icons/restart.svg' alt=''/>
+                                    <div>Restart</div>
+                                </div>
+                            </button>
+                            <button>
+                                <div className='action-button dangerous'>
+                                    <img src='/img/icons/delete.svg' alt=''/>
+                                    <div>Delete</div>
+                                </div>
+                            </button>
                         </div>
                     </div>
                     <div className='machines-grid-cell'>

@@ -74,6 +74,8 @@ html,body {
     background-color: initial;
     border: none;
     border-radius: 50%;
+    margin: 0;
+    padding: 0;
 }
 
 .a-link {

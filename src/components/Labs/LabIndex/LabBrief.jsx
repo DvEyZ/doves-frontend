@@ -23,8 +23,12 @@ export class LabBrief extends React.Component
                     up ${this.props.up === 100 ? 'full-up' : this.props.up > 50 ? 'm2h-up' : 'l2h-up'}                   
                 `}>{this.props.up}% up</div>
                 <div style={{display:'inline', margin:'auto'}}></div>
-                <div className='link' onClick={() => {this.start()}}><img src='/img/icons/start.svg' alt='start'/></div>
-                <div className='link' onClick={() => {this.stop()}}><img src='/img/icons/stop.svg' alt='stop'/></div>
+                <button className='pod-element-button'>
+                    <div className='link' onClick={() => {this.start()}}><img src='/img/icons/start.svg' alt='start'/></div>
+                </button>
+                <button className='pod-element-button'>
+                    <div className='link' onClick={() => {this.stop()}}><img src='/img/icons/stop.svg' alt='stop'/></div>
+                </button>
                 <Link className='link' to={this.props.name}><img src='/img/icons/go.svg' alt='go'/></Link>
             </div>
         )
