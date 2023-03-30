@@ -10,7 +10,7 @@ export class DockerMachinePortRedirection extends React.Component
                 <div>=&gt;</div>
                 <div>
                     <span className='prefix'>xxx</span>
-                    <input type='text' maxLength={2} className='text-input'></input>
+                    <input type='text' maxLength={2} style={{width:'1.5rem'}} className='text-input'></input>
                 </div>
                 <button onClick={() => {this.props.onDelete();}} className='pod-element-button'>
                     <img src='/img/icons/close.svg' alt='remove'/>
