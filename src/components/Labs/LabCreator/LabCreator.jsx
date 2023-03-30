@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import './LabCreator.css'
+import '../../App/Forms.css'
 
 export class LabCreator extends React.Component
 {
@@ -36,7 +36,7 @@ export class LabCreator extends React.Component
                 <hr/>
                 <div className='form-container'>
                     <form className='lab-creation-form' onSubmit={(e) => {this.submit(e)}}>
-                        <h2>Lab parameters</h2>
+                        <h2>Lab properties</h2>
                         <div className='lab-creation-form-elem'>
                             <div className='form-value'>
                                 <label htmlFor='name'>Name: </label>
@@ -76,7 +76,7 @@ export class LabCreator extends React.Component
                                 <div className='form-value'>
                                     <label htmlFor='name'>Port prefix: </label>
                                     <br/>
-                                    <input className='text-input' type='text' pattern='[1-5]{1}' id='port-prefix' name='port-prefix'
+                                    <input className='text-input' type='text' pattern='[1-5]{1}' id='port-prefix' name='port_prefix'
                                     title='Port prefix must be a digit from 1 to 5.' required/>
                                 </div>
                             </div>

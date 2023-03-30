@@ -70,6 +70,12 @@ html,body {
     margin:5px;
 }
 
+.pod-element-button {
+    background-color: initial;
+    border: none;
+    border-radius: 50%;
+}
+
 .a-link {
     text-decoration: underline;
     font-weight: bolder;

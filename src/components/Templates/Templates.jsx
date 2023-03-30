@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { TemplatesIndex } from "./TemplatesIndex/TemplatesIndex";
+import { TemplateCreator } from "./TemplateCreator/TemplateCreator";
 
 export class Templates extends React.Component
 {
@@ -24,9 +25,10 @@ export class Templates extends React.Component
             <div id='templates' className='main-elem'>
                 <Routes>
                     <Route path='/' element={<TemplatesIndex templates={this.state.templates}/>}/>
+                    <Route path='@create' element={<TemplateCreator/>}/>
                     {
                         this.state.templates.map((v,i) => {
-                            return <Route path={`${v.name}/*`}/>
+                            return <Route key={i} path={`${v.name}/*`}/>
                         })
                     }
                 </Routes>
