@@ -1,0 +1,24 @@
+import React from "react";
+import { MenuButton } from "./MenuButton";
+import './Menu.css';
+import { Link } from "react-router-dom";
+
+
+export class Menu extends React.Component
+{
+    render()
+    {
+        return(
+            <div id='menu'>
+                <div id='home-button'>
+                    <Link to='/'>DoVEs</Link>
+                </div>
+                <div id='button-container'>
+                    <MenuButton url='/' text='Dashboard' icon='/img/icons/grid.svg'/>
+                    <MenuButton url='labs' text='Labs' icon='/img/icons/lab.svg'/>
+                    <MenuButton url='templates' text='Template manager' icon='/img/icons/script.svg'/>
+                </div>
+            </div>
+        );
+    }
+}
