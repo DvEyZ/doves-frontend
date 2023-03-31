@@ -28,7 +28,7 @@ export class DockerMachineDef extends React.Component
                 <div className='header'>
                     <h3>{this.props.name}</h3>
                     <div style={{margin:'auto'}}></div>
-                    <button className='pod-element-button' onClick={() => {this.setState({expanded: !this.state.expanded})}}>
+                    <button type='button' className='pod-element-button' onClick={() => {this.setState({expanded: !this.state.expanded})}}>
                         <img src={`/img/icons/arrow-${this.state.expanded ? 'down' : 'right'}.svg`} alt={`${this.state.expanded ? 'collapse' : 'expand'}`}
                         className='expander'/>
                     </button>
@@ -38,7 +38,7 @@ export class DockerMachineDef extends React.Component
                     <div className='hc'>
                         <h4>Port redirections</h4>
                         <div style={{margin:'auto'}}></div>
-                        <button className='pod-element-button' onClick={() => {
+                        <button type='button' className='pod-element-button' onClick={() => {
                                 this.setState({ports: [...this.state.ports, {id:this.state.i}], i: this.state.i+1, });
                             }}>
                             <img src='/img/icons/plus.svg' alt='create'/>
