@@ -60,7 +60,7 @@ export class LabCreator extends React.Component
                                 title='Machine count must be a number from 1 to 99.' required/>
                             </div>
                             <div className='form-value'>
-                                <label htmlFor='type'>Template: </label>
+                                <label htmlFor='template'>Template: </label>
                                 <br/>
                                 <select className='text-input' id='template' name='template'>
                                     {this.state.templates[this.state.selectedType]?.map((v,i) => {

@@ -2,6 +2,18 @@ import React from "react";
 import YAML from 'yaml';
 import { DockerMachineDef } from "./DockerMachineDef";
 
+export const readFile = async (file, enc='utf-8') =>
+{
+    return new Promise((resolve, reject) => {
+        let fileReader = new FileReader();
+        fileReader.onload = () => {
+            resolve(fileReader.result)
+        }
+        fileReader.onerror = reject
+        fileReader.readAsText(file, enc)
+    })
+}
+
 export class DockerTemplateCreator extends React.Component
 {
     constructor(props)
@@ -9,28 +21,24 @@ export class DockerTemplateCreator extends React.Component
         super(props);
         this.state = {
             base: {
-                machine_defs:null,
+                machine_defs: null,
             }
         };
     }
 
     parseBase = () => 
     {
-        let fileReader = new FileReader();
-        fileReader.onload = (event) => {
+        readFile(this.file.files[0]).then((file) => {
             try
             {
-                let base = YAML.parse(event.target.result);
-                console.log(base);
+                let base = YAML.parse(file);
                 this.setState({base:{machine_defs:Object.keys(base.services)}})
             }
             catch(e)
             {
                 alert(e);
             }
-        }
-
-        fileReader.readAsText(this.file.files[0], 'utf-8');
+        })
     }
 
     render()
@@ -40,7 +48,7 @@ export class DockerTemplateCreator extends React.Component
                 <h2>Docker properties</h2>
                 <div className='lab-creation-form-elem'>
                     <div className='form-value'>
-                        <label htmlFor='name'>docker-compose base: </label>
+                        <label htmlFor='compose-base'>docker-compose base: </label>
                         <br/>
                         <input className='text-input' type='file' id='compose-base' name='compose_base' ref={(node) => {this.file = node}} 
                         onChange={() => {this.parseBase()}} required />

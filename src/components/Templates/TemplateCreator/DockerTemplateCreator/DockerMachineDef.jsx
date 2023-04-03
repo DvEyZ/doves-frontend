@@ -10,7 +10,8 @@ export class DockerMachineDef extends React.Component
         this.state = {
             expanded: false,
             ports: [],
-            i: 0
+            port_i: 0,
+            excluded: false
         }
     }
 
@@ -24,7 +25,7 @@ export class DockerMachineDef extends React.Component
     render()
     {
         return(
-            <div className='machine-def'>
+            <div className={`machine-def ${this.state.excluded && 'excluded'}`}>
                 <div className='header'>
                     <h3>{this.props.name}</h3>
                     <div style={{margin:'auto'}}></div>
@@ -38,18 +39,27 @@ export class DockerMachineDef extends React.Component
                     <div className='hc'>
                         <h4>Port redirections</h4>
                         <div style={{margin:'auto'}}></div>
-                        <button type='button' className='pod-element-button' onClick={() => {
-                                this.setState({ports: [...this.state.ports, {id:this.state.i}], i: this.state.i+1, });
-                            }}>
+                        <button type='button' className='pod-element-button h-button' onClick={() => {
+                                this.setState({ports: [...this.state.ports, {id:this.state.port_i}], port_i: this.state.port_i+1, });
+                            }} disabled={this.state.excluded}>
                             <img src='/img/icons/plus.svg' alt='create'/>
                         </button>
                     </div>
                     <div className='port-redirections'>
                         {
-                            this.state.ports.map((v,i) => {
-                                return <DockerMachinePortRedirection key={v.id} onDelete={() => {this.removePortRedirection(v.id)}}/>
+                            !this.state.excluded &&
+                            this.state.ports.map((v) => {
+                                return <DockerMachinePortRedirection key={v.id} num={v.id} machine={this.props.name} onDelete={() => {this.removePortRedirection(v.id)}}/>
                             })
                         }
+                    </div>
+                    <hr/>
+                    <div>
+                        <input type='checkbox' id='static-mach' name={`${this.props.name}-static-mach`} onChange={(e) => {this.setState({
+                            excluded: e.target.checked,
+                            ports: e.target.checked ? this.state.ports : []
+                        })}}/>
+                        <span>Static service <i>{'(Will not be replicated and allocated to users.)'}</i></span>
                     </div>
                 </div>
             </div>

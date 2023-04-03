@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { DockerTemplateCreator } from "./DockerTemplateCreator/DockerTemplateCreator";
+import { DockerTemplateCreator, readFile } from "./DockerTemplateCreator/DockerTemplateCreator";
 
 import './TemplateCreator.css'
 
@@ -18,6 +18,40 @@ export class TemplateCreator extends React.Component
         }
     }
 
+    submit = async (e) => 
+    {
+        e.preventDefault();
+
+        let fd = new FormData(e.target);
+        let form = Object.fromEntries(fd);
+
+        let data = {};
+
+        data.name = form.name;
+        data.type = form.type;
+    
+        if(data.type === 'docker')
+        {
+            data.docker = {
+                base: await readFile(form.compose_base),
+                services: {
+                    machines: this.docker.state.base.machine_defs?.map((machine) => {
+                        return { 
+                            name: machine,
+                            ports: Array.apply(null, {length: Object.keys(form).filter((v) => {return v.match(`${machine}-port-.*`)}).length / 2}).map(Number.call, Number)
+                                .map((ord) => {return {
+                                    inbound: form[`${machine}-port-inbound-${ord}`],
+                                    outbound: form[`${machine}-port-outbound-${ord}`]
+                                }})
+                        }
+                    })
+                }
+            }
+        }
+
+        console.log(data);
+    }
+    
     render()
     {
         return(
@@ -45,7 +79,7 @@ export class TemplateCreator extends React.Component
                                 </select>
                             </div>
                         </div>
-                        {this.state.selectedType === 'docker' && <DockerTemplateCreator/>}
+                        {this.state.selectedType === 'docker' && <DockerTemplateCreator ref={node => {this.docker = node}}/>}
                         <div className='lab-submit-container'>
                             <input type='submit' className='submit-input' value='Create'/>
                             <input type='reset' className='submit-input' value='Reset'/>

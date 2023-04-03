@@ -31,12 +31,12 @@
     align-items: center;
 }
 
-.machine-def .hc img {
+.machine-def .h-button {
     padding: 0.5rem;
     border-radius: 50%;
 }
 
-.machine-def .hc img:hover {
+.machine-def .h-button:hover:not(:disabled) {
     background-color:rgba(56, 56, 110, 0.8);
     cursor: pointer;
 }
@@ -54,17 +54,11 @@
     margin-right: 2px;
 }
 
-.machine-def .port-redir .prefix {
+.machine-def .prefix {
     font-style: italic;
     color: rgb(151, 151, 151);
 }
 
-.machine-def .port-redir img {
-    padding: 0.5rem;
-    border-radius: 50%;
-}
-
-.machine-def .port-redir img:hover {
-    background-color:rgba(56, 56, 110, 0.8);
-    cursor: pointer;
+.machine-def.excluded {
+    background-color: rgb(100, 100, 100);
 }
