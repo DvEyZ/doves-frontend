@@ -32,26 +32,28 @@ export class TemplateCreator extends React.Component
     
         if(data.type === 'docker')
         {
-            data.docker = {
-                base: await readFile(form.compose_base),
-                services: {
-                    machines: this.docker.state.base.machine_defs?.map((machine) => {
-                        return { 
-                            name: machine,
-                            ports: Array.apply(null, {length: Object.keys(form).filter((v) => {return v.match(`${machine}-port-.*`)}).length / 2}).map(Number.call, Number)
-                                .map((ord) => {return {
-                                    inbound: form[`${machine}-port-inbound-${ord}`],
-                                    outbound: form[`${machine}-port-outbound-${ord}`]
-                                }})
-                        }
-                    })
-                }
+            data.supplement = {
+                base: await readFile(form.compose_base)
             }
+            
+            data.machines = this.docker.state.base.machine_defs?.map((machine) => {
+                return { 
+                    name: machine,
+                    ports: form[`${machine}-static-mach`] !== 'on' ? 
+                        Array.apply(null, {length: Object.keys(form).filter((v) => {return v.match(`${machine}-port-.*`)}).length / 2}).map(Number.call, Number)
+                        .map((ord) => {return {
+                            inbound: form[`${machine}-port-inbound-${ord}`],
+                            outbound: form[`${machine}-port-outbound-${ord}`]
+                        }}) : null,
+                    supplement: {
+                        static: form[`${machine}-static-mach`] === 'on' ? true : false
+                    }
+                }
+            })
         }
-
         console.log(data);
     }
-    
+
     render()
     {
         return(
