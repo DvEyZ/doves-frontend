@@ -36,7 +36,7 @@ export class TemplateCreator extends React.Component
                 base: await readFile(form.compose_base)
             }
             
-            data.machines = this.docker.state.base.machine_defs?.map((machine) => {
+            data.machineDefs = this.docker.state.base.machineDefs?.map((machine) => {
                 return { 
                     name: machine,
                     ports: form[`${machine}-static-mach`] !== 'on' ? 
@@ -51,6 +51,7 @@ export class TemplateCreator extends React.Component
                 }
             })
         }
+
         console.log(data);
     }
 

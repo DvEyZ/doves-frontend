@@ -21,7 +21,7 @@ export class DockerTemplateCreator extends React.Component
         super(props);
         this.state = {
             base: {
-                machine_defs: null,
+                machineDefs: null,
             }
         };
     }
@@ -32,7 +32,7 @@ export class DockerTemplateCreator extends React.Component
             try
             {
                 let base = YAML.parse(file);
-                this.setState({base:{machine_defs:Object.keys(base.services)}})
+                this.setState({base:{machineDefs:Object.keys(base.services)}})
             }
             catch(e)
             {
@@ -58,11 +58,11 @@ export class DockerTemplateCreator extends React.Component
                         <br/>
                         <div className='pod-container'>
                             {
-                                this.state.base.machine_defs?.map((v,i) => {
+                                this.state.base.machineDefs?.map((v,i) => {
                                     return <DockerMachineDef key={i} name={v} /> 
                                 })
                             }
-                            {!this.state.base.machine_defs && 
+                            {!this.state.base.machineDefs && 
                                 <div className='empty'>Upload a base file to configure machine definitions.</div>
                             }
                         </div>

@@ -25,6 +25,23 @@ export class LabCreator extends React.Component
     submit = (e) => 
     {
         e.preventDefault();
+        
+        let f = new FormData(e.target);
+        
+        let data = {};
+
+        data.name = f.get('name');
+        data.type = f.get('type');
+        data.machineCount = f.get('machine_count');
+        
+        if(data.type === 'docker')
+        {
+            data.supplement = {
+                portPrefix: f.get('port_prefix')
+            }
+        }
+        
+        console.log(data);
     }
 
     render()
