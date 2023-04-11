@@ -38,16 +38,14 @@ export class LabDetails extends React.Component
     render()
     {
         return(
-            <div>
-                <Routes>
-                    <Route path='/' element={<LabDetailsIndex state={this.state}/>}/>
-                    {
-                        this.state.machines.map((v,i) => {
-                            return <Route key={i} path={v.name} element={<MachineDetails name={v.name} lab_name={this.state.name}/>}/>;
-                        })
-                    }
-                </Routes>
-            </div>
+            <Routes>
+                <Route path='/' element={<LabDetailsIndex state={this.state}/>}/>
+                {
+                    this.state.machines.map((v,i) => {
+                        return <Route key={i} path={v.name} element={<MachineDetails name={v.name} lab_name={this.state.name}/>}/>;
+                    })
+                }
+            </Routes>
         )
     }
 }

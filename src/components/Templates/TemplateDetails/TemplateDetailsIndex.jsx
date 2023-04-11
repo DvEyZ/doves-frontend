@@ -38,7 +38,7 @@ export class TemplateDetailsIndex extends React.Component
         return(
             <div>
                 <h1>{this.props.name}</h1>
-                <div><Link to='../' className='a-link'>&lt;&lt;&lt; Back to Templates</Link></div>
+                <div><Link to='../../' className='a-link'>&lt;&lt;&lt; Back to Templates</Link></div>
                 <hr/>
                 <div className='lab-details-container'>
                     <div>

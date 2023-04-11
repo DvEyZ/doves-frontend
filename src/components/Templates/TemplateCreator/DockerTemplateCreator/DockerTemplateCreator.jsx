@@ -20,9 +20,7 @@ export class DockerTemplateCreator extends React.Component
     {
         super(props);
         this.state = {
-            base: {
-                machineDefs: null,
-            }
+            machineDefs: this.props.edit.machineDefs ? this.props.edit.machineDefs : null,
         };
     }
 
@@ -32,7 +30,13 @@ export class DockerTemplateCreator extends React.Component
             try
             {
                 let base = YAML.parse(file);
-                this.setState({base:{machineDefs:Object.keys(base.services)}})
+                this.setState({machineDefs: Object.keys(base.services).map((v) => {
+                    return {
+                        name: v,
+                        ports: [],
+                        supplement: {}
+                    }
+                })})
             }
             catch(e)
             {
@@ -47,22 +51,29 @@ export class DockerTemplateCreator extends React.Component
             <div>
                 <h2>Docker properties</h2>
                 <div className='lab-creation-form-elem'>
-                    <div className='form-value'>
+                    <div className='form-value compose-base'>
                         <label htmlFor='compose-base'>docker-compose base: </label>
                         <br/>
-                        <input className='text-input' type='file' id='compose-base' name='compose_base' ref={(node) => {this.file = node}} 
-                        onChange={() => {this.parseBase()}} required />
+                        {
+                            this.props.edit.supplement 
+                            ?  <div><textarea className='text-input' id='compose-base' 
+                            name='compose-base' defaultValue={this.props.edit.supplement.base}
+                            rows='breaks' style={{height:'20rem'}} required/></div>
+                            : <input className='text-input' type='file' id='compose-base' 
+                            name='compose-base' ref={(node) => {this.file = node}} 
+                            onChange={() => {this.parseBase()}} required />
+                        }
                     </div>
                     <div className='form-value mach-assoc'>
                         <label>Machine definitions: </label>
                         <br/>
                         <div className='pod-container'>
                             {
-                                this.state.base.machineDefs?.map((v,i) => {
-                                    return <DockerMachineDef key={i} name={v} /> 
+                                this.state.machineDefs?.map((v,i) => {
+                                    return <DockerMachineDef key={i} name={v.name} ports={v.ports} supplement={v.supplement} /> 
                                 })
                             }
-                            {!this.state.base.machineDefs && 
+                            {!this.state.machineDefs && 
                                 <div className='empty'>Upload a base file to configure machine definitions.</div>
                             }
                         </div>

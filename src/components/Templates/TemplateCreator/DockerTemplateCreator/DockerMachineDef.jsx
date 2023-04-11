@@ -9,9 +9,15 @@ export class DockerMachineDef extends React.Component
 
         this.state = {
             expanded: false,
-            ports: [],
-            port_i: 0,
-            excluded: false
+            ports: this.props.ports ? this.props.ports.map((v,i) => {
+                return {
+                    id: i,
+                    inbound: v.inbound,
+                    outbound: v.outbound
+                }
+            }) : [],
+            port_i: this.props.ports.length,
+            excluded: this.props.supplement.static ? this.props.excluded.static : false
         }
     }
 
@@ -48,8 +54,10 @@ export class DockerMachineDef extends React.Component
                     <div className='port-redirections'>
                         {
                             !this.state.excluded &&
-                            this.state.ports.map((v) => {
-                                return <DockerMachinePortRedirection key={v.id} num={v.id} machine={this.props.name} onDelete={() => {this.removePortRedirection(v.id)}}/>
+                            this.state.ports.map((v,i) => {
+                                return <DockerMachinePortRedirection key={i} num={v.id} machine={this.props.name} 
+                                inbound={v.inbound ? v.inbound : null} outbound={v.outbound ? v.outbound : null}
+                                onDelete={() => {this.removePortRedirection(v.id)}}/>
                             })
                         }
                     </div>

@@ -15,6 +15,7 @@
     padding: 1rem;
     background-color: rgb(34, 34, 34);
     border-radius: 10px;
+    border: 2px solid rgb(153, 153, 153);
 }
 
 @media (min-width:1024px)

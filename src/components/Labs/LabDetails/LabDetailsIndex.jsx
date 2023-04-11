@@ -55,10 +55,21 @@ export class LabDetailsIndex extends React.Component
                                     <div>Stop</div>
                                 </div>
                             </button>
-                            <button>
+                            <button onClick={() => {
+                                this.setState({
+                                    displayedPopup: {
+                                        type: 'confirm',
+                                        title: 'Warning!',
+                                        text: `You are about to rebuild the lab "${this.state.name}".
+                                        This action will result in resetting all machines to their base state, erasing all changes done to them. Proceed?`,
+                                        onCancel: () => {this.setState({displayedPopup: null})},
+                                        onConfirm: () => {this.setState({displayedPopup: null})}
+                                    }
+                                })
+                            }}>
                                 <div className='action-button'>
                                     <img src='/img/icons/restart.svg' alt=''/>
-                                    <div>Restart</div>
+                                    <div>Rebuild</div>
                                 </div>
                             </button>
                             <button onClick={() => {
