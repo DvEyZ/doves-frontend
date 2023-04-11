@@ -35,7 +35,7 @@ export class LabDetailsIndex extends React.Component
                                 <Link className='a-link' to={`/templates/${this.state.template}`}>{this.state.template}</Link>
                             </div>
                             {this.state.type === 'docker' && <div className='summary-cell summary-key light'>Port prefix</div>}
-                            {this.state.type === 'docker' && <div className='summary-cell summary-value light'>{this.state.supplement.prefix}</div>}
+                            {this.state.type === 'docker' && <div className='summary-cell summary-value light'>{this.state.supplement.portPrefix}</div>}
                         </div>
                     </div>
                     <div>

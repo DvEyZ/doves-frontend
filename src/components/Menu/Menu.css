@@ -13,7 +13,7 @@
 #home-button {
     display: flex;
     justify-content: center;
-    color: rgb(230, 187, 0) !important;
+    color: rgb(214, 228, 222) !important;
     font-size: 3rem;
     user-select: none;
     font-weight: bold;

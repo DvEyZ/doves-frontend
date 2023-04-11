@@ -30,7 +30,7 @@ export class LabDetails extends React.Component
                 }
             ],
             supplement: {
-                prefix: 1
+                portPrefix: 1
             }
         }
     }
