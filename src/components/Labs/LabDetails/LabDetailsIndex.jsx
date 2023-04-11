@@ -1,6 +1,7 @@
 import React from "react";
 import { MachineBrief } from "./MachineBrief";
 import { Link } from "react-router-dom";
+import { Confirm } from "../../Popups/Confirm";
 
 export class LabDetailsIndex extends React.Component
 {
@@ -9,6 +10,7 @@ export class LabDetailsIndex extends React.Component
         super(props);
         
         this.state = this.props.state;
+        this.state.displayedPopup = null;
     }
 
     render()
@@ -59,7 +61,17 @@ export class LabDetailsIndex extends React.Component
                                     <div>Restart</div>
                                 </div>
                             </button>
-                            <button>
+                            <button onClick={() => {
+                                this.setState({
+                                    displayedPopup: {
+                                        type: 'confirm',
+                                        title: 'Warning!',
+                                        text: `You are about to delete the lab "${this.state.name}". This action cannot be undone. Proceed?`,
+                                        onCancel: () => {this.setState({displayedPopup: null})},
+                                        onConfirm: () => {this.setState({displayedPopup: null})}
+                                    }
+                                })
+                            }}>
                                 <div className='action-button dangerous'>
                                     <img src='/img/icons/delete.svg' alt=''/>
                                     <div>Delete</div>
@@ -79,6 +91,12 @@ export class LabDetailsIndex extends React.Component
                         </div>
                     </div>
                 </div>
+                {
+                    this.state.displayedPopup &&
+                        this.state.displayedPopup.type === 'confirm' ?
+                        <Confirm title={this.state.displayedPopup.title} text={this.state.displayedPopup.text}
+                        onCancel={this.state.displayedPopup.onCancel} onConfirm={this.state.displayedPopup.onConfirm}/> : null
+                }
             </div>
         );
     }
