@@ -46,7 +46,7 @@
 }
 
 .popup-confirm {
-    background-color: rgba(68, 165, 108, 0.8);
+    background-color: rgb(173, 0, 0);
 }
 
 .popup-cancel:hover {
@@ -54,5 +54,5 @@
 }
 
 .popup-confirm:hover {
-    background-color: rgba(24, 218, 104, 0.8);
+    background-color: rgb(230, 30, 30);
 }

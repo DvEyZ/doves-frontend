@@ -7,7 +7,7 @@ export class Footer extends React.Component
     {
         return(
             <div id='footer'>
-                <h3>Powered by DoVEs</h3>
+                <div>Made with 💙 by <a className='a-link' href='https://github.com/DvEyZ'>Szymon Kwiręg</a></div>
             </div>
         )
     }

@@ -79,3 +79,11 @@
 .lab-create-button img {
     margin: 1rem;
 }
+
+@media (min-width:1024px)
+{
+    .create-button-container { 
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}

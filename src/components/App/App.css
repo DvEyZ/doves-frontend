@@ -17,7 +17,22 @@ html,body {
     #main
     {
         display: grid;
-        grid-template-columns: 15% 85%;
+        grid-template-columns: 18rem auto;
+    }
+
+    .main-elem
+    {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+}
+
+@media (max-width:1024px)
+{
+    .main-elem
+    {
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 }
 
@@ -45,8 +60,6 @@ html,body {
 
 .main-elem {
     background-color: rgb(63, 63, 63);
-    padding-left: 3rem;
-    padding-right: 3rem;
     padding-bottom: 3rem;
 }
 

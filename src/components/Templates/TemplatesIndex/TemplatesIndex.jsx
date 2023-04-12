@@ -31,7 +31,7 @@ export class TemplatesIndex extends React.Component
                         <div className='empty'>Nothing to see here...</div>
                     }
                 </div>
-                <div style={{display:'grid', gridTemplateColumns: '1fr 1fr 1fr'}}>
+                <div className='create-button-container'>
                     <Link to='@create' className='lab-create-button'>
                         <img src='/img/icons/plus.svg' alt=''/>
                         <div>Create a template</div>

@@ -16,7 +16,7 @@ export class Menu extends React.Component
                 <div id='button-container'>
                     <MenuButton url='/' text='Dashboard' icon='/img/icons/grid.svg'/>
                     <MenuButton url='labs' text='Labs' icon='/img/icons/lab.svg'/>
-                    <MenuButton url='templates' text='Template manager' icon='/img/icons/script.svg'/>
+                    <MenuButton url='templates' text='Templates' icon='/img/icons/script.svg'/>
                 </div>
             </div>
         );

@@ -85,7 +85,7 @@ export class TemplateCreator extends React.Component
     {
         return(
             <div>
-                <h1>{ !!this.state.editTemplate ? 'Edit' : 'Create'} template {!!this.state.editTemplate && this.state.editTemplate.name}</h1>
+                <h1>{ !!this.state.editTemplate ? 'Edit' : 'Create'} template</h1>
                 <div><Link to='../' className='a-link'>&lt;&lt;&lt; Back to { !!this.state.editTemplate ? this.state.editTemplate.name :'Templates' }</Link></div>
                 <hr/>
                 <div className='form-container'>
