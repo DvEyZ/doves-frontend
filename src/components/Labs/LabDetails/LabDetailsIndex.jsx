@@ -67,7 +67,7 @@ export class LabDetailsIndex extends React.Component
                                     }
                                 })
                             }}>
-                                <div className='action-button'>
+                                <div className='action-button dangerous'>
                                     <img src='/img/icons/restart.svg' alt=''/>
                                     <div>Rebuild</div>
                                 </div>

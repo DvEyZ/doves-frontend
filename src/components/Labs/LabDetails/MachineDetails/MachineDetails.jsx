@@ -68,7 +68,7 @@ export class MachineDetails extends React.Component
                             <button>
                                 <div className='action-button'>
                                     <img src='/img/icons/restart.svg' alt=''/>
-                                    <div>Restart</div>
+                                    <div>Reset</div>
                                 </div>
                             </button>
                         </div>

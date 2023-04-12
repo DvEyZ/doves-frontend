@@ -34,7 +34,7 @@ export class TemplatesIndex extends React.Component
                 <div className='create-button-container'>
                     <Link to='@create' className='lab-create-button'>
                         <img src='/img/icons/plus.svg' alt=''/>
-                        <div>Create a template</div>
+                        <div>Create template</div>
                     </Link>
                 </div>
             </div>

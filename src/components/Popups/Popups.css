@@ -30,11 +30,17 @@
 }
 
 .popup-inner button {
-    padding: 6px;
     color: inherit;
-    font-size: inherit;
+    padding: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border: 1px solid rgb(126, 126, 126);
     border-radius: 8px;
-    border: 0;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    column-gap: 0.3rem;
+    font-size: inherit;
 }
 
 .popup-inner button:hover {
@@ -42,17 +48,17 @@
 }
 
 .popup-cancel {
-    background-color: rgb(87, 87, 87);
+    background-color: rgba(63, 63, 168, 0.1);
 }
 
 .popup-confirm {
-    background-color: rgb(173, 0, 0);
+    background-color: rgba(168, 63, 63, 0.1)
 }
 
 .popup-cancel:hover {
-    background-color: rgb(104, 104, 104);
+    background-color: rgba(63, 63, 168, 0.4);
 }
 
 .popup-confirm:hover {
-    background-color: rgb(230, 30, 30);
+    background-color: rgba(168, 63, 63, 0.4)
 }

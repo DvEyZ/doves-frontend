@@ -18,7 +18,7 @@ export class Notification extends React.Component
         return(
             <div className={`notification notification-${this.props.type}`}>
                 <div className='notification-icon-container'>
-                    <img src={`/img/icons/icon-notification-${this.props.type}.svg`} alt='' style={{width:'70%'}}/>
+                    <img src={`/img/icons/icon-notification-${this.props.type}.svg`} alt='' style={{width:'80%'}}/>
                 </div>
                 <div className='notification-container'>
                     <h3>{`${
