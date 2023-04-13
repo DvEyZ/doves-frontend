@@ -58,7 +58,10 @@ export class DockerTemplateCreator extends React.Component
                             this.props.edit.supplement 
                             ?  <div><textarea className='text-input' id='compose-base' 
                             name='compose-base' defaultValue={this.props.edit.supplement.base}
-                            rows='breaks' style={{height:'20rem'}} required/></div>
+                            rows='breaks' style={{height:'20rem'}} 
+                            onKeyDown={(e) => {if (e.key === 'Tab') {
+                                e.preventDefault(); e.target.setRangeText('  ',e.target.selectionStart,e.target.selectionStart,'end')
+                            }}} spellCheck={false} required/></div>
                             : <input className='text-input' type='file' id='compose-base' 
                             name='compose-base' ref={(node) => {this.file = node}} 
                             onChange={() => {this.parseBase()}} required />

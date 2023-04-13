@@ -57,7 +57,7 @@ export class TemplateDetailsIndex extends React.Component
                                 return <div key={i} className={`machine-def ${this.state.type === 'docker' && v.supplement.static ? 'excluded' : ''}`}>
                                     <h3>{v.name}</h3>
                                     <hr/>
-                                    {v.ports && <h4>Port redirections</h4>}
+                                    {v.ports.length > 0 && <h4>Port redirections</h4>}
                                     <div style={{borderLeft: '6px solid rgba(0, 0, 0, 0.3)', paddingLeft: '6px'}}>
                                         {v.ports.map((v,i) => {
                                             if(this.state.type === 'docker')
