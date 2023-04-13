@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { DockerTemplateCreator, readFile } from "./DockerTemplateCreator/DockerTemplateCreator";
-import { Confirm } from "../../Popups/Confirm";
+import { DockerTemplateCreator, readFile } from "./DockerTemplateCreator";
+import { KVMTemplateCreator } from "./KVMTemplateCreator";
+import { ConfirmPopup } from "../../Popups/ConfirmPopup";
 
 import './TemplateCreator.css'
 
@@ -13,7 +14,7 @@ export class TemplateCreator extends React.Component
 
         this.state = {
             types: [
-                'docker'
+                'docker','kvm'
             ],
             selectedType: 'docker',
             editTemplate: this.props.edit ? {
@@ -55,24 +56,43 @@ export class TemplateCreator extends React.Component
 
         data.name = form.name;
         data.type = form.type;
-    
+
+        var src = undefined;
+        if(data.type === 'docker') 
+            src = this.docker;
+        else if(data.type === 'kvm')
+            src = this.kvm;
+
+        data.machineDefs = src.state.machineDefs?.map((machine) => {
+            return { 
+                name: machine.name,
+                ports: form[`${machine.name}-static-mach`] !== 'on' ? 
+                    Array.apply(null, {length: Object.keys(form).filter((v) => {return v.match(`${machine.name}-port-.*`)}).length / 2}).map(Number.call, Number)
+                    .map((ord) => {return {
+                        inbound: form[`${machine.name}-port-inbound-${ord}`],
+                        outbound: form[`${machine.name}-port-outbound-${ord}`]
+                    }}) : null,
+                supplement: {
+                    static: form[`${machine.name}-static-mach`] === 'on' ? true : false
+                }
+            }
+        })
+
         if(data.type === 'docker')
         {
             data.supplement = {
                 base: !this.props.edit ? await readFile(form['compose-base']) : form['compose-base']
             }
-            
-            data.machineDefs = this.docker.state.machineDefs?.map((machine) => {
-                return { 
-                    name: machine.name,
-                    ports: form[`${machine.name}-static-mach`] !== 'on' ? 
-                        Array.apply(null, {length: Object.keys(form).filter((v) => {return v.match(`${machine.name}-port-.*`)}).length / 2}).map(Number.call, Number)
-                        .map((ord) => {return {
-                            inbound: form[`${machine.name}-port-inbound-${ord}`],
-                            outbound: form[`${machine.name}-port-outbound-${ord}`]
-                        }}) : null,
+        }
+
+        if(data.type === 'kvm')
+        {
+            data.machineDefs = data.machineDefs.map(async (v) => {
+                return {
+                    name: v.name,
+                    ports: v.ports,
                     supplement: {
-                        static: form[`${machine.name}-static-mach`] === 'on' ? true : false
+                        //image: await readFile(form[`${v.name}-qcow2-image`], )
                     }
                 }
             })
@@ -132,6 +152,10 @@ export class TemplateCreator extends React.Component
                         </div>
                         {this.state.selectedType === 'docker' && <DockerTemplateCreator ref={node => {this.docker = node}} 
                         edit={{machineDefs: this.state.editTemplate?.machineDefs, supplement: this.state.editTemplate?.supplement}}/>}
+
+                        {this.state.selectedType === 'kvm' && <KVMTemplateCreator ref={node => {this.kvm = node}} 
+                        edit={{machineDefs: this.state.editTemplate?.machineDefs, supplement: this.state.editTemplate?.supplement}}/>}
+
                         <div className='lab-submit-container'>
                             <input type='submit' className='submit-input' value='Create'/>
                             <input type='reset' className='submit-input' value='Reset'/>
@@ -141,7 +165,7 @@ export class TemplateCreator extends React.Component
                 {
                     this.state.displayedPopup &&
                         this.state.displayedPopup.type === 'confirm' ?
-                        <Confirm title={this.state.displayedPopup.title} text={this.state.displayedPopup.text}
+                        <ConfirmPopup title={this.state.displayedPopup.title} text={this.state.displayedPopup.text}
                         onCancel={this.state.displayedPopup.onCancel} onConfirm={this.state.displayedPopup.onConfirm}/> : null
                 }
             </div>

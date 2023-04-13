@@ -1,7 +1,7 @@
 import React from "react";
 import { MachineBrief } from "./MachineBrief";
 import { Link } from "react-router-dom";
-import { Confirm } from "../../Popups/Confirm";
+import { ConfirmPopup } from "../../Popups/ConfirmPopup";
 
 export class LabDetailsIndex extends React.Component
 {
@@ -105,7 +105,7 @@ export class LabDetailsIndex extends React.Component
                 {
                     this.state.displayedPopup &&
                         this.state.displayedPopup.type === 'confirm' ?
-                        <Confirm title={this.state.displayedPopup.title} text={this.state.displayedPopup.text}
+                        <ConfirmPopup title={this.state.displayedPopup.title} text={this.state.displayedPopup.text}
                         onCancel={this.state.displayedPopup.onCancel} onConfirm={this.state.displayedPopup.onConfirm}/> : null
                 }
             </div>

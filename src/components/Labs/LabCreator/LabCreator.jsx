@@ -10,11 +10,14 @@ export class LabCreator extends React.Component
 
         this.state = {
             types: [
-                'docker'
+                'docker', 'kvm'
             ],
             selectedType: 'docker',
             templates: {
                 docker: [
+                    'web-services',
+                ],
+                kvm: [
                     'web-services',
                     'routing'
                 ]
@@ -85,20 +88,14 @@ export class LabCreator extends React.Component
                                     })}
                                 </select>
                             </div>
-                        </div>
-                        {this.state.selectedType === 'docker' &&
-                        <div>
-                            <h2>Docker properties</h2>
-                            <div className='lab-creation-form-elem'>
-                                <div className='form-value'>
-                                    <label htmlFor='name'>Port prefix: </label>
-                                    <br/>
-                                    <input className='text-input' type='text' pattern='[1-5]{1}' id='port-prefix' name='port_prefix'
-                                    title='Port prefix must be a digit from 1 to 5.' required/>
-                                </div>
+                            <div className='form-value'>
+                                <label htmlFor='name'>Port prefix: </label>
+                                <br/>
+                                <input className='text-input' type='text' pattern='[1-5]{1}' id='port-prefix' name='port_prefix'
+                                title='Port prefix must be a digit from 1 to 5.' required/>
                             </div>
                         </div>
-                        }
+
                         <div className='lab-submit-container'>
                             <input type='submit' className='submit-input' value='Create'/>
                             <input type='reset' className='submit-input' value='Reset'/>

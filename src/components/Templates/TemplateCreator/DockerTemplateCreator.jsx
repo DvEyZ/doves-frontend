@@ -1,6 +1,6 @@
 import React from "react";
 import YAML from 'yaml';
-import { DockerMachineDef } from "./DockerMachineDef";
+import { MachineDef } from "./MachineDef/MachineDef";
 
 export const readFile = async (file, enc='utf-8') =>
 {
@@ -73,7 +73,8 @@ export class DockerTemplateCreator extends React.Component
                         <div className='pod-container'>
                             {
                                 this.state.machineDefs?.map((v,i) => {
-                                    return <DockerMachineDef key={i} name={v.name} ports={v.ports} supplement={v.supplement} /> 
+                                    return <MachineDef key={i} name={v.name} ports={v.ports} supplement={v.supplement} 
+                                    fields={['port-redirections']}/> 
                                 })
                             }
                             {!this.state.machineDefs && 

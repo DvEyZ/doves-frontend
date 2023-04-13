@@ -3,7 +3,7 @@ import { Portal } from "react-portal";
 
 import './Popups.css';
 
-export class Confirm extends React.Component
+export class ConfirmPopup extends React.Component
 {
     render()
     {

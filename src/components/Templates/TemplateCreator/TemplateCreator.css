@@ -62,3 +62,14 @@
 .machine-def.excluded {
     background-color: rgb(100, 100, 100);
 }
+
+.mach-assoc-wide {
+    grid-column: 1/4;
+}
+
+.mach-add-kvm {
+    grid-column: 2/3;
+    display: flex;
+    column-gap: 0.5rem;
+    align-items: flex-end;
+}
