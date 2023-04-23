@@ -63,7 +63,6 @@ export class KVMTemplateCreator extends React.Component
         return(
             <div>
                 <h2>KVM properties</h2>
-                <hr/>
                 <div className='lab-creation-form-elem'>
                     <div className='form-value mach-assoc-wide'>
                         <label>Machine definitions: </label>

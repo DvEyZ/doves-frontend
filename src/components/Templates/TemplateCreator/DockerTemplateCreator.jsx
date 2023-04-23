@@ -2,7 +2,7 @@ import React from "react";
 import YAML from 'yaml';
 import { MachineDef } from "./MachineDef/MachineDef";
 
-export const readFile = async (file, enc='utf-8') =>
+export const readFile = async (file, type='text', enc='utf-8') =>
 {
     return new Promise((resolve, reject) => {
         let fileReader = new FileReader();
@@ -10,7 +10,12 @@ export const readFile = async (file, enc='utf-8') =>
             resolve(fileReader.result)
         }
         fileReader.onerror = reject
-        fileReader.readAsText(file, enc)
+        if(type === 'text')
+            fileReader.readAsText(file, enc);
+        else if(type === 'base64')
+            fileReader.readAsDataURL(file);
+        else
+            reject();
     })
 }
 

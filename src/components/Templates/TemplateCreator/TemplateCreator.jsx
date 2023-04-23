@@ -5,6 +5,7 @@ import { KVMTemplateCreator } from "./KVMTemplateCreator";
 import { ConfirmPopup } from "../../Popups/ConfirmPopup";
 
 import './TemplateCreator.css'
+import { ErrorPopup } from "../../Popups/ErrorPopup";
 
 export class TemplateCreator extends React.Component
 {
@@ -72,9 +73,6 @@ export class TemplateCreator extends React.Component
                         inbound: form[`${machine.name}-port-inbound-${ord}`],
                         outbound: form[`${machine.name}-port-outbound-${ord}`]
                     }}) : null,
-                supplement: {
-                    static: form[`${machine.name}-static-mach`] === 'on' ? true : false
-                }
             }
         })
 
@@ -87,15 +85,27 @@ export class TemplateCreator extends React.Component
 
         if(data.type === 'kvm')
         {
-            data.machineDefs = data.machineDefs.map(async (v) => {
+            if(data.machineDefs.length === 0)
+            {
+                this.setState({
+                    displayedPopup: {
+                        type: 'error',
+                        title: 'Error',
+                        text: 'There are no machine definitions. You should create some in order to create a lab.',
+                        onConfirm: () => {this.setState({displayedPopup:null})}
+                    }
+                });
+                return;
+            }
+            data.machineDefs = await Promise.all(data.machineDefs.map(async (v) => {
                 return {
                     name: v.name,
                     ports: v.ports,
                     supplement: {
-                        //image: await readFile(form[`${v.name}-qcow2-image`], )
+                        image: await readFile(form[`${v.name}-qcow2-image`], 'base64')
                     }
                 }
-            })
+            }))
         }
 
         console.log(data);
@@ -163,10 +173,14 @@ export class TemplateCreator extends React.Component
                     </form>
                 </div>
                 {
-                    this.state.displayedPopup &&
-                        this.state.displayedPopup.type === 'confirm' ?
+                        this.state.displayedPopup?.type === 'confirm' &&
                         <ConfirmPopup title={this.state.displayedPopup.title} text={this.state.displayedPopup.text}
-                        onCancel={this.state.displayedPopup.onCancel} onConfirm={this.state.displayedPopup.onConfirm}/> : null
+                        onCancel={this.state.displayedPopup.onCancel} onConfirm={this.state.displayedPopup.onConfirm}/>
+                }
+                {
+                        this.state.displayedPopup?.type === 'error' &&
+                        <ErrorPopup title={this.state.displayedPopup.title} text={this.state.displayedPopup.text}
+                        onConfirm={this.state.displayedPopup.onConfirm}/>
                 }
             </div>
         );

@@ -35,14 +35,9 @@ export class LabCreator extends React.Component
 
         data.name = f.get('name');
         data.type = f.get('type');
-        data.machineCount = f.get('machine_count');
-        
-        if(data.type === 'docker')
-        {
-            data.supplement = {
-                portPrefix: f.get('port_prefix')
-            }
-        }
+        data.machineCount = Number(f.get('machine_count'));
+        data.template = f.get('template')
+        data.portPrefix = Number(f.get('port_prefix'))
         
         console.log(data);
     }

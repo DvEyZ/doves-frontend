@@ -11,13 +11,12 @@ export class MachineDetails extends React.Component
             type: 'docker',
             address: '0.0.0.0',
             status: 'running',
-            supplement: {
-                ports: [
-                    {i:'22',e:'10122'},
-                    {i:'80',e:'10180'},
-                    {i:'443',e:'10143'}
-                ]
-            }
+            portRedirections: [
+                {inbound:'22',outbound:'10122'},
+                {inbound:'80',outbound:'10180'},
+                {inbound:'443',outbound:'10143'}
+            ],
+            supplement: {}
         }
     }
 
@@ -44,8 +43,8 @@ export class MachineDetails extends React.Component
                             <div className='summary-cell summary-value dark'>{this.state.address}</div>
                             {this.state.type === 'docker' && <div className='summary-cell summary-key light'>Ports</div>}
                             {this.state.type === 'docker' && <div className='summary-cell summary-value light'>
-                                {this.state.supplement.ports.map((v,i) => {
-                                    return <div key={i}>{`${v.i} => ${v.e}`}</div>
+                                {this.state.portRedirections.map((v,i) => {
+                                    return <div key={i}>{`${v.inbound} => ${v.outbound}`}</div>
                                 })}
                             </div>}
                         </div>
