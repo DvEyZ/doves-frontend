@@ -15,6 +15,7 @@ export class LabDetails extends React.Component
             type: 'docker',
             up: 100,
             template: 'web-services',
+            portPrefix: 1,
             machines: [
                 {
                     name: 'machine1',
@@ -29,9 +30,6 @@ export class LabDetails extends React.Component
                     status: 'restarting'
                 }
             ],
-            supplement: {
-                portPrefix: 1
-            }
         }
     }
 
