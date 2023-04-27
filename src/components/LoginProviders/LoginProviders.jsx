@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { LoginProviderIndex } from "./LoginProviderIndex/LoginProviderIndex";
 import { LoginProviderDetails } from "./LoginProviderDetails/LoginProviderDetails";
+import { LoginProviderCreator } from "./LoginProviderCreator/LoginProviderCreator";
 
 export class LoginProviders extends React.Component
 {
@@ -29,9 +30,10 @@ export class LoginProviders extends React.Component
             <div id='login-providers' className='main-elem'>
                 <Routes>
                     <Route path='/' element={<LoginProviderIndex loginProviders={this.state.loginProviders}/>}/>
+                    <Route path='/@create' element={<LoginProviderCreator/>}/>
                     {
                         this.state.loginProviders.map((v,i) =>
-                            <Route path={v.name} element={<LoginProviderDetails key={i} name={v.name}/>}/>
+                            <Route key={i} path={`${v.name}/*`} element={<LoginProviderDetails name={v.name}/>}/>
                         )
                     }
                 </Routes>

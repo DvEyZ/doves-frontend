@@ -1,5 +1,6 @@
 import React from "react";
 import { LoginProviderBrief } from "./LoginProviderBrief";
+import { Link } from "react-router-dom";
 
 export class LoginProviderIndex extends React.Component
 {
@@ -29,6 +30,12 @@ export class LoginProviderIndex extends React.Component
                         this.state.loginProviders.length === 0 &&
                         <div className='empty'>No login providers registered.</div>
                     }
+                </div>
+                <div className='create-button-container'>
+                    <Link to='@create' className='lab-create-button'>
+                        <img src='/img/icons/plus.svg' alt=''/>
+                        <div>Register provider</div>
+                    </Link>
                 </div>
             </div>
         );
