@@ -52,7 +52,7 @@ export class LoginProviderCreator extends React.Component
         return(
             <div>
                 <h1>{this.props.edit ? 'Edit' : 'Register'} login provider</h1>
-                <div><Link to='../' className='a-link'>&lt;&lt;&lt; Back to Login providers</Link></div>
+                <div><Link to='../' className='a-link'>&lt;&lt;&lt; Back to { !!this.state.editProvider ? this.state.editProvider.name :'login providers' }</Link></div>
                 <hr/>
                 <div className='form-container'>
                     <form className='lab-creation-form' onSubmit={(e) => {this.submit(e)}} autoComplete='off'>
