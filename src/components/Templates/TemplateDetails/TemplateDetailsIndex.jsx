@@ -37,7 +37,15 @@ export class TemplateDetailsIndex extends React.Component
     {
         return(
             <div>
-                <h1>{this.props.name}</h1>
+                <div style={{display:'flex', paddingTop:'2rem', columnGap:'1rem'}}>
+                    <h1 style={{paddingTop:'0'}}>{this.props.name}</h1>
+                    <button style={{backgroundColor:'inherit', color:'inherit', padding:'0', margin:'0', border:'0', }}>
+                        <Link to='edit' className='action-button' style={{textDecoration:'none'}}>
+                            <img src='/img/icons/edit.svg' alt=''/>
+                            <div style={{fontSize:'1rem', textDecoration:'none'}}>Edit</div>
+                        </Link>
+                    </button>
+                </div>
                 <div><Link to='../../' className='a-link'>&lt;&lt;&lt; Back to Templates</Link></div>
                 <hr/>
                 <div className='lab-details-container'>
