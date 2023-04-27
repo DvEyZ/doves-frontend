@@ -38,6 +38,14 @@ export class LabDetailsIndex extends React.Component
                             </div>
                             <div className='summary-cell summary-key light'>Port prefix</div>
                             <div className='summary-cell summary-value light'>{this.state.portPrefix}</div>
+                            <div className='summary-cell summary-key dark'>Login providers</div>
+                            <div className='summary-cell summary-value dark' style={{paddingTop:'2px', paddingBottom:'2px'}}>
+                                {this.state.loginProviders.map((v,i) => 
+                                <div style={{display:'flex', paddingTop:'2px', paddingBottom:'2px'}} key={i}>
+                                    <img style={{width:'1.5rem', height:'1.5rem', paddingRight:'2px'}} 
+                                    src={`/img/icons/${v.type}-login-provider.svg`}/>{v.name}
+                                </div>
+                            )}</div>
                         </div>
                     </div>
                     <div>

@@ -21,7 +21,17 @@ export class LabCreator extends React.Component
                     'web-services',
                     'routing'
                 ]
-            }
+            },
+            loginProviders: [
+                {
+                    name: 'guacamole-local',
+                    type: 'guacamole'
+                },
+                {
+                    name: 'guacamole-remote',
+                    type: 'guacamole'
+                }
+            ]
         }
     }
 
@@ -37,7 +47,8 @@ export class LabCreator extends React.Component
         data.type = f.get('type');
         data.machineCount = Number(f.get('machine_count'));
         data.template = f.get('template')
-        data.portPrefix = Number(f.get('port_prefix'))
+        data.portPrefix = Number(f.get('port_prefix'));
+        data.loginProviders = f.getAll('login_provider')
         
         console.log(data);
     }
@@ -88,6 +99,25 @@ export class LabCreator extends React.Component
                                 <br/>
                                 <input className='text-input' type='text' pattern='[1-5]{1}' id='port-prefix' name='port_prefix'
                                 title='Port prefix must be a digit from 1 to 5.' required/>
+                            </div>
+                            <div className='form-value'>
+                                <label htmlFor='name'>Login providers: </label>
+                                <br/>
+                                <fieldset style={{border:'0', margin:'0', padding:'0', paddingTop:'0.2rem'}}>
+                                    {
+                                        this.state.loginProviders.map((v,i) => {
+                                            return <div style={{display:'inline-flex', marginTop:'2px', marginBottom:'2px'}} key={i}>
+                                                <input type="checkbox" name='login_provider' defaultChecked
+                                                style={{width:'1rem', height:'1rem'}} value={v.name}/>
+                                                <img style={{width:'1.5rem', height:'1.5rem', paddingRight:'2px'}} 
+                                                    src={`/img/icons/${v.type}-login-provider.svg`} alt=''/>
+                                                <label style={{fontSize:'inherit', color:'inherit'}}>
+                                                    {v.name}
+                                                </label>
+                                            </div>
+                                        })
+                                    }
+                                </fieldset>
                             </div>
                         </div>
 

@@ -30,6 +30,12 @@ export class LabDetails extends React.Component
                     status: 'restarting'
                 }
             ],
+            loginProviders: [
+                {
+                    name: 'guacamole-local',
+                    type: 'guacamole',
+                }
+            ]
         }
     }
 
