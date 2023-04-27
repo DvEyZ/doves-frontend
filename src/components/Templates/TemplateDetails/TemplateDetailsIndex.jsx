@@ -68,8 +68,7 @@ export class TemplateDetailsIndex extends React.Component
                                     {v.ports.length > 0 && <h4>Port redirections</h4>}
                                     <div style={{borderLeft: '6px solid rgba(0, 0, 0, 0.3)', paddingLeft: '6px'}}>
                                         {v.ports.map((v,i) => {
-                                            if(this.state.type === 'docker')
-                                                return <div key={i}>{v.inbound} {'=>'} <i style={{color:'gray'}}>xxx</i>{v.outbound}</div>
+                                            return <div key={i}>{v.inbound} {'=>'} <i style={{color:'gray'}}>xxx</i>{v.outbound}</div>
                                         })}
                                     </div>
                                     {this.state.type === 'docker' && v.supplement.static && <h4>Static</h4>}
