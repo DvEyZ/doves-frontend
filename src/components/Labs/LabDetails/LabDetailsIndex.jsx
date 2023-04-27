@@ -43,7 +43,8 @@ export class LabDetailsIndex extends React.Component
                                 {this.state.loginProviders.map((v,i) => 
                                 <div style={{display:'flex', paddingTop:'2px', paddingBottom:'2px'}} key={i}>
                                     <img style={{width:'1.5rem', height:'1.5rem', paddingRight:'2px'}} 
-                                    src={`/img/icons/${v.type}-login-provider.svg`}/>{v.name}
+                                    src={`/img/icons/${v.type}-login-provider.svg`} alt=''/>
+                                    <Link className='a-link' to={`/loginProviders/${v.name}`}>{v.name}</Link>
                                 </div>
                             )}</div>
                         </div>

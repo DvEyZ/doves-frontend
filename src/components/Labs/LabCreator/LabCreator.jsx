@@ -112,7 +112,7 @@ export class LabCreator extends React.Component
                                                 <img style={{width:'1.5rem', height:'1.5rem', paddingRight:'2px'}} 
                                                     src={`/img/icons/${v.type}-login-provider.svg`} alt=''/>
                                                 <label style={{fontSize:'inherit', color:'inherit'}}>
-                                                    {v.name}
+                                                    <Link className="a-link" to={`/loginProviders/${v.name}`}>{v.name}</Link>
                                                 </label>
                                             </div>
                                         })
