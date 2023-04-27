@@ -8,6 +8,7 @@ import { Labs } from '../Labs/Labs';
 import { Templates } from '../Templates/Templates';
 
 import './App.css';
+import { LoginProviders } from '../LoginProviders/LoginProviders';
 
 export class App extends React.Component
 {
@@ -22,6 +23,7 @@ export class App extends React.Component
                             <Route path='/' element={<Dashboard/>}/>
                             <Route path='/labs/*' element={<Labs/>}/>
                             <Route path='/templates/*' element={<Templates/>}/>
+                            <Route path='/loginProviders/*' element={<LoginProviders/>}/>
                             <Route path='*' element={<div className='main-elem'>
                                 <h1>Oops!</h1>
                                 <hr/>
