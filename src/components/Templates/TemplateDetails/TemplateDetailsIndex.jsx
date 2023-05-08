@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ConfirmPopup } from "../../Popups/ConfirmPopup";
 
 export class TemplateDetailsIndex extends React.Component
 {
@@ -29,21 +30,45 @@ export class TemplateDetailsIndex extends React.Component
             ],
             supplement: {
                 base: 'test',
-            }
+            },
         }
+    }
+
+    deleteTemplate = () => {
+        this.setState({
+            displayedPopup: {
+                type: 'confirm',
+                title: 'Warning!',
+                text: `You are about to delete template ${this.props.name}. This action cannot be undone. Proceed?`,
+                onConfirm: () => {
+                    this.setState({displayedPopup: null});
+                    // Delete
+                },
+                onCancel: () => {
+                    this.setState({displayedPopup: null})
+                }
+            }
+        })
     }
 
     render()
     {
         return(
             <div>
-                <div style={{display:'flex', paddingTop:'2rem', columnGap:'1rem'}}>
+                <div style={{display:'flex', paddingTop:'2rem', columnGap:'1rem', alignItems:'center'}}>
                     <h1 style={{paddingTop:'0'}}>{this.props.name}</h1>
                     <button style={{backgroundColor:'inherit', color:'inherit', padding:'0', margin:'0', border:'0', }}>
                         <Link to='edit' className='action-button' style={{textDecoration:'none'}}>
                             <img src='/img/icons/edit.svg' alt=''/>
                             <div style={{fontSize:'1rem', textDecoration:'none'}}>Edit</div>
                         </Link>
+                    </button>
+                    <button style={{backgroundColor:'inherit', color:'inherit', padding:'0', margin:'0', border:'0', height:'100%'}} 
+                    onClick={() => {this.deleteTemplate()}}>
+                        <span className='action-button dangerous' style={{textDecoration:'none'}}>
+                            <img src='/img/icons/delete.svg' alt=''/>
+                            <div style={{fontSize:'1rem', textDecoration:'none'}}>Delete</div>
+                        </span>
                     </button>
                 </div>
                 <div><Link to='../../' className='a-link'>&lt;&lt;&lt; Back to Templates</Link></div>
@@ -86,6 +111,11 @@ export class TemplateDetailsIndex extends React.Component
                         </div>
                     }
                 </div>
+                {
+                    this.state.displayedPopup?.type === 'confirm' &&
+                    <ConfirmPopup title={this.state.displayedPopup.title} text={this.state.displayedPopup.text}
+                    onCancel={this.state.displayedPopup.onCancel} onConfirm={this.state.displayedPopup.onConfirm}/>
+                }
             </div>
         );
     }

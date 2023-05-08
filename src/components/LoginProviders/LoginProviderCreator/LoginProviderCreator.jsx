@@ -103,7 +103,7 @@ export class LoginProviderCreator extends React.Component
                             </>
                         }
                         <div className='lab-submit-container'>
-                            <input type='submit' className='submit-input' value='Create'/>
+                            <input type='submit' className='submit-input' value={this.props.edit ? 'Save' : 'Create'}/>
                             <input type='reset' className='submit-input' value='Reset'/>
                         </div>
                     </form>

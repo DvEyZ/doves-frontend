@@ -167,7 +167,7 @@ export class TemplateCreator extends React.Component
                         edit={{machineDefs: this.state.editTemplate?.machineDefs, supplement: this.state.editTemplate?.supplement}}/>}
 
                         <div className='lab-submit-container'>
-                            <input type='submit' className='submit-input' value='Create'/>
+                            <input type='submit' className='submit-input' value={this.props.edit ? 'Save' : 'Create'}/>
                             <input type='reset' className='submit-input' value='Reset'/>
                         </div>
                     </form>

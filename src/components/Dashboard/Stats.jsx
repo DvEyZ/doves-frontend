@@ -6,7 +6,7 @@ export class Stats extends React.Component
     {
         return(
             <div id='stats'>
-                <h2>Stats</h2>
+                <h2>Wtf is going on here?</h2>
             </div>
         );
     }
