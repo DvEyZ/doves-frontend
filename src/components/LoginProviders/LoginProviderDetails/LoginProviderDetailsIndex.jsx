@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ConfirmPopup } from "../../Popups/ConfirmPopup";
+import { apiUrl } from "../../../configs/api";
+import { Loading } from "../../Loading/Loading"
 
 export class LoginProviderDetailsIndex extends React.Component
 {
@@ -9,13 +11,22 @@ export class LoginProviderDetailsIndex extends React.Component
         super(props);
 
         this.state = {
-            type: 'guacamole',
-            config: {
-                apiUrl: 'http://241.49.175.132:8080/guacamole/api',
-                adminUser: 'guacadmin',
-                adminPassword: 'guacadmin'
-            }
+            loaded: false,
+            error: false,
         }
+    }
+
+    componentDidMount()
+    {
+        fetch(`${apiUrl}/loginProviders/${this.props.name}`).then((r) => r.json()).then((res) => {
+            this.setState({
+                type: res.type,
+                config: res.config,
+                loaded: true
+            });
+        }).catch((e) => {
+            this.setState({loaded: true, error: e});
+        })
     }
 
     deleteLoginProvider = () => {
@@ -57,28 +68,31 @@ export class LoginProviderDetailsIndex extends React.Component
                 </div>
                 <div><Link to='../../' className='a-link'>&lt;&lt;&lt; Back to Login providers</Link></div>
                 <hr/>
-                <div className="lab-details-container">
-                    <div>
-                        <h2>Configuration</h2>
-                        <div className='summary-table'>
-                            <div className='summary-cell summary-key light'>Name</div>
-                            <div className='summary-cell summary-value light'>{this.props.name}</div>
-                            <div className='summary-cell summary-key dark'>Type</div>
-                            <div className='summary-cell summary-value dark'>{this.state.type}</div>
-                            {
-                                this.state.type === 'guacamole' &&
-                                <>
-                                    <div className='summary-cell summary-key light'>API URL</div>
-                                    <div className='summary-cell summary-value light'><a className="a-link" href={this.state.config.apiUrl}>
-                                        {this.state.config.apiUrl}    
-                                    </a></div>
-                                    <div className='summary-cell summary-key dark'>Admin user</div>
-                                    <div className='summary-cell summary-value dark'>{this.state.config.adminUser}</div>
-                                </>
-                            }
+                {
+                    this.state.loaded ?
+                    <div className="lab-details-container">
+                        <div>
+                            <h2>Configuration</h2>
+                            <div className='summary-table'>
+                                <div className='summary-cell summary-key light'>Name</div>
+                                <div className='summary-cell summary-value light'>{this.props.name}</div>
+                                <div className='summary-cell summary-key dark'>Type</div>
+                                <div className='summary-cell summary-value dark'>{this.state.type}</div>
+                                {
+                                    this.state.type === 'guacamole' &&
+                                    <>
+                                        <div className='summary-cell summary-key light'>API URL</div>
+                                        <div className='summary-cell summary-value light'><a className="a-link" href={this.state.config.apiUrl}>
+                                            {this.state.config.apiUrl}    
+                                        </a></div>
+                                        <div className='summary-cell summary-key dark'>Admin user</div>
+                                        <div className='summary-cell summary-value dark'>{this.state.config.adminUsername}</div>
+                                    </>
+                                }
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </div> : <Loading/>
+                }
                 {
                     this.state.displayedPopup?.type === 'confirm' &&
                     <ConfirmPopup title={this.state.displayedPopup.title} text={this.state.displayedPopup.text}

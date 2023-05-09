@@ -1,18 +1,10 @@
 import React from "react";
 import { LoginProviderBrief } from "./LoginProviderBrief";
 import { Link } from "react-router-dom";
+import { Loading } from "../../Loading/Loading";
 
 export class LoginProviderIndex extends React.Component
 {
-    constructor(props)
-    {
-        super(props);
-
-        this.state = {
-            loginProviders: this.props.loginProviders
-        }
-    }
-
     render()
     {
         return(
@@ -22,12 +14,14 @@ export class LoginProviderIndex extends React.Component
                 <h2>Registered login providers</h2>
                 <div className='pod-container'>
                     {
-                        this.state.loginProviders.map((v,i) => 
+                        this.props.loaded ?
+                        this.props.loginProviders.map((v,i) => 
                             <LoginProviderBrief key={i} name={v.name} type={v.type}/>
-                        )   
+                        )
+                        : <Loading/>
                     }
                     {
-                        this.state.loginProviders.length === 0 &&
+                        this.props.loaded && this.props.loginProviders.length === 0 &&
                         <div className='empty'>No login providers registered.</div>
                     }
                 </div>

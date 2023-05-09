@@ -1,0 +1,21 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
+.loading-wheel {
+    border-radius: 50%;
+    width: 66px;
+    height: 66px;
+    border: 4px solid;
+    border-color: rgba(85, 85, 110, 0.8) transparent rgba(85, 85, 110, 0.8) transparent;
+    animation: spin 1s ease-in-out infinite;
+}

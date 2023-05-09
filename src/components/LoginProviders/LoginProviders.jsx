@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { LoginProviderIndex } from "./LoginProviderIndex/LoginProviderIndex";
 import { LoginProviderDetails } from "./LoginProviderDetails/LoginProviderDetails";
 import { LoginProviderCreator } from "./LoginProviderCreator/LoginProviderCreator";
+import { apiUrl } from "../../configs/api";
 
 export class LoginProviders extends React.Component
 {
@@ -11,17 +12,19 @@ export class LoginProviders extends React.Component
         super(props);
 
         this.state = {
-            loginProviders: [
-                {
-                    name: 'guacamole-local',
-                    type: 'guacamole'
-                },
-                {
-                    name: 'guacamole-remote',
-                    type: 'guacamole'
-                },
-            ]
+            loginProviders: [],
+            loaded: false,
+            error: false
         }
+    }
+
+    componentDidMount()
+    {
+        fetch(`${apiUrl}/loginProviders`).then((r) => r.json()).then((res) => {
+            this.setState({loginProviders: res.loginProviders, loaded: true})
+        }).catch((e) => {
+            this.setState({error: e})
+        })
     }
 
     render()
@@ -29,7 +32,7 @@ export class LoginProviders extends React.Component
         return(
             <div id='login-providers' className='main-elem'>
                 <Routes>
-                    <Route path='/' element={<LoginProviderIndex loginProviders={this.state.loginProviders}/>}/>
+                    <Route path='/' element={<LoginProviderIndex loginProviders={this.state.loginProviders} loaded={this.state.loaded}/>}/>
                     <Route path='/@create' element={<LoginProviderCreator/>}/>
                     {
                         this.state.loginProviders.map((v,i) =>
