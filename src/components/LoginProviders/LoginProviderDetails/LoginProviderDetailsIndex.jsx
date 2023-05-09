@@ -38,6 +38,7 @@ export class LoginProviderDetailsIndex extends React.Component
                 onConfirm: () => {
                     this.setState({displayedPopup: null});
                     // Delete
+                    fetch(`${apiUrl}/loginProviders/${this.props.name}`, {method:'DELETE'})
                 },
                 onCancel: () => {
                     this.setState({displayedPopup: null})

@@ -58,12 +58,20 @@ export class LoginProviderCreator extends React.Component
         {
             data.config = {
                 apiUrl: fd.get('api-url'),
-                adminUser: fd.get('admin-user'),
+                adminUsername: fd.get('admin-user'),
                 adminPassword: fd.get('admin-pass')
             }
         }
 
-        console.log(data);
+        if(!this.props.edit)    // New provider
+        {
+            fetch(`${apiUrl}/loginProviders`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
+        }
+        else    // Update provider
+        {
+            fetch(`${apiUrl}/loginProviders/${this.state.editProvider.name}`, 
+                {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
+        }
     }
 
     render()

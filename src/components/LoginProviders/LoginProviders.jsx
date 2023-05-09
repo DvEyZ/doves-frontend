@@ -20,11 +20,15 @@ export class LoginProviders extends React.Component
 
     componentDidMount()
     {
+        this.fetchLoginProviders();
+    }
+
+    fetchLoginProviders = () => {
         fetch(`${apiUrl}/loginProviders`).then((r) => r.json()).then((res) => {
             this.setState({loginProviders: res.loginProviders, loaded: true})
         }).catch((e) => {
             this.setState({error: e})
-        })
+        });
     }
 
     render()
@@ -32,7 +36,8 @@ export class LoginProviders extends React.Component
         return(
             <div id='login-providers' className='main-elem'>
                 <Routes>
-                    <Route path='/' element={<LoginProviderIndex loginProviders={this.state.loginProviders} loaded={this.state.loaded}/>}/>
+                    <Route path='/' element={<LoginProviderIndex loginProviders={this.state.loginProviders} loaded={this.state.loaded}
+                        onRefresh={() => {this.fetchLoginProviders()}}/>}/>
                     <Route path='/@create' element={<LoginProviderCreator/>}/>
                     {
                         this.state.loginProviders.map((v,i) =>

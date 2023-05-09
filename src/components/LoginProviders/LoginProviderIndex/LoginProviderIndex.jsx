@@ -5,6 +5,11 @@ import { Loading } from "../../Loading/Loading";
 
 export class LoginProviderIndex extends React.Component
 {
+    componentDidMount()
+    {
+        this.props.onRefresh();
+    }
+
     render()
     {
         return(
