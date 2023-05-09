@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { DockerTemplateCreator, readFile } from "./DockerTemplateCreator";
 import { KVMTemplateCreator } from "./KVMTemplateCreator";
 import { ConfirmPopup } from "../../Popups/ConfirmPopup";
+import { apiUrl } from '../../../configs/api'
 
 import './TemplateCreator.css'
 import { ErrorPopup } from "../../Popups/ErrorPopup";
+import { Loading } from "../../Loading/Loading";
 
 export class TemplateCreator extends React.Component
 {
@@ -14,36 +16,37 @@ export class TemplateCreator extends React.Component
         super(props);
 
         this.state = {
-            types: [
-                'docker','kvm'
-            ],
+            types: undefined,
             selectedType: 'docker',
-            editTemplate: this.props.edit ? {
-                name: 'web-services',
-                type: 'docker',
-                machineDefs: [
-                    {
-                        name: 'opensuse',
-                        ports: [
-                            {
-                                inbound: '22',
-                                outbound: '22'
-                            },
-                            {
-                                inbound: '80',
-                                outbound: '80'
-                            }
-                        ],
-                        supplement: {
-                            static: false
-                        }
-                    }
-                ],
-                supplement: {
-                    base: 'test',
-                }
-            } : null
+            editTemplate: undefined,
+            loaded: false,
+            error: false,
         }
+    }
+
+    componentDidMount()
+    {
+        fetch(`${apiUrl}/about/labTypes`).then((r) => r.json()).then((res) => {
+            this.setState({
+                types: res.labTypes
+            })
+        }).then(() => {
+            if(this.props.edit)
+            {
+                fetch(`${apiUrl}/templates/${this.props.edit}`).then((r) => r.json()).then((res) => {
+                    this.setState({
+                        editTemplate: {
+                            name: res.name,
+                            type: res.type,
+                            machineDefs: res.machineDefs,
+                            supplement: res.supplement
+                        },
+                        loaded: true,
+                    })
+                })
+            }
+            else this.setState({loaded:true})
+        }).catch((e) => {this.setState({error: e})})
     }
 
     submit = async (e) => 
@@ -91,7 +94,7 @@ export class TemplateCreator extends React.Component
                     displayedPopup: {
                         type: 'error',
                         title: 'Error',
-                        text: 'There are no machine definitions. You should create some in order to create a lab.',
+                        text: 'There are no machine definitions. You should create some in order to create a template.',
                         onConfirm: () => {this.setState({displayedPopup:null})}
                     }
                 });
@@ -108,7 +111,14 @@ export class TemplateCreator extends React.Component
             }))
         }
 
-        console.log(data);
+        if(!this.props.edit)    // new template
+        {
+            fetch(`${apiUrl}/templates`, {method:'POST',headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
+        }
+        else
+        {
+            fetch(`${apiUrl}/templates/${this.state.editTemplate.name}`, {method:'PUT',headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
+        }
     }
 
     render()
@@ -116,62 +126,65 @@ export class TemplateCreator extends React.Component
         return(
             <div>
                 <h1>{ !!this.state.editTemplate ? 'Edit' : 'Create'} template</h1>
-                <div><Link to='../' className='a-link'>&lt;&lt;&lt; Back to { !!this.state.editTemplate ? this.state.editTemplate.name :'Templates' }</Link></div>
+                <div><Link to={`../${this.state.editTemplate ? '../' : ''}`} className='a-link'>&lt;&lt;&lt; Back to Templates</Link></div>
                 <hr/>
-                <div className='form-container'>
-                    <form className='lab-creation-form' onSubmit={(e) => {
-                        if(!this.state.editTemplate) 
-                        {
-                            this.submit(e)
-                        }
-                        else
-                        {
-                            e.preventDefault()
-                            this.setState({
-                                displayedPopup: {
-                                    type: 'confirm',
-                                    title: 'Warning!',
-                                    text: `You are about to update the template "${this.state.editTemplate.name}".
-                                    If you proceed, all labs based on this template will be rebuilt, resulting in resetting them to base state
-                                    and erasing all user-made changes. Proceed?`,
-                                    onCancel: () => {this.setState({displayedPopup:null})},
-                                    onConfirm: () => {this.submit(e);this.setState({displayedPopup:null})}
-                                }
-                            });
-                        }
-                    }}>
-                        <h2>Template properties</h2>
-                        <div className='lab-creation-form-elem'>
-                            <div className='form-value'>
-                                <label htmlFor='name'>Name: </label>
-                                <br/>
-                                <input className='text-input' type='text' id='name' pattern='[A-Za-z0-9_-]+' name='name'
-                                title='Name can consist only of letters, numbers, dashes, and floor signs.' readOnly={!!this.state.editTemplate}
-                                defaultValue={this.state.editTemplate?.name} required/>
+                {
+                    this.state.loaded ?
+                    <div className='form-container'>
+                        <form className='lab-creation-form' onSubmit={(e) => {
+                            if(!this.state.editTemplate) 
+                            {
+                                this.submit(e)
+                            }
+                            else
+                            {
+                                e.preventDefault()
+                                this.setState({
+                                    displayedPopup: {
+                                        type: 'confirm',
+                                        title: 'Warning!',
+                                        text: `You are about to update the template "${this.state.editTemplate.name}".
+                                        If you proceed, all labs based on this template will be rebuilt, resulting in resetting them to base state
+                                        and erasing all user-made changes. Proceed?`,
+                                        onCancel: () => {this.setState({displayedPopup:null})},
+                                        onConfirm: () => {this.submit(e);this.setState({displayedPopup:null})}
+                                    }
+                                });
+                            }
+                        }}>
+                            <h2>Template properties</h2>
+                            <div className='lab-creation-form-elem'>
+                                <div className='form-value'>
+                                    <label htmlFor='name'>Name: </label>
+                                    <br/>
+                                    <input className='text-input' type='text' id='name' pattern='[A-Za-z0-9_-]+' name='name'
+                                    title='Name can consist only of letters, numbers, dashes, and floor signs.' readOnly={!!this.state.editTemplate}
+                                    defaultValue={this.state.editTemplate?.name} required/>
+                                </div>
+                                <div className='form-value'>
+                                    <label htmlFor='type'>Type: </label>
+                                    <br/>
+                                    <select className='text-input' id='type' name='type' selected={this.state.editTemplate?.type}>
+                                        {this.state.types.map((v,i) => {
+                                            return <option key={i} value={v} onClick={() => {this.setState({selectedType:v})}}
+                                            disabled={(this.state.editTemplate?.type !== v) && !!this.state.editTemplate?.type}>{v}</option>
+                                        })}
+                                    </select>
+                                </div>
                             </div>
-                            <div className='form-value'>
-                                <label htmlFor='type'>Type: </label>
-                                <br/>
-                                <select className='text-input' id='type' name='type' selected={this.state.editTemplate?.type}>
-                                    {this.state.types.map((v,i) => {
-                                        return <option key={i} value={v} onClick={() => {this.setState({selectedType:v})}}
-                                        disabled={(this.state.editTemplate?.type !== v) && !!this.state.editTemplate?.type}>{v}</option>
-                                    })}
-                                </select>
+                            {this.state.selectedType === 'docker' && <DockerTemplateCreator ref={node => {this.docker = node}} 
+                            edit={{machineDefs: this.state.editTemplate?.machineDefs, supplement: this.state.editTemplate?.supplement}}/>}
+
+                            {this.state.selectedType === 'kvm' && <KVMTemplateCreator ref={node => {this.kvm = node}} 
+                            edit={{machineDefs: this.state.editTemplate?.machineDefs, supplement: this.state.editTemplate?.supplement}}/>}
+
+                            <div className='lab-submit-container'>
+                                <input type='submit' className='submit-input' value={this.props.edit ? 'Save' : 'Create'}/>
+                                <input type='reset' className='submit-input' value='Reset'/>
                             </div>
-                        </div>
-                        {this.state.selectedType === 'docker' && <DockerTemplateCreator ref={node => {this.docker = node}} 
-                        edit={{machineDefs: this.state.editTemplate?.machineDefs, supplement: this.state.editTemplate?.supplement}}/>}
-
-                        {this.state.selectedType === 'kvm' && <KVMTemplateCreator ref={node => {this.kvm = node}} 
-                        edit={{machineDefs: this.state.editTemplate?.machineDefs, supplement: this.state.editTemplate?.supplement}}/>}
-
-                        <div className='lab-submit-container'>
-                            <input type='submit' className='submit-input' value={this.props.edit ? 'Save' : 'Create'}/>
-                            <input type='reset' className='submit-input' value='Reset'/>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div> : <Loading/>
+                }
                 {
                         this.state.displayedPopup?.type === 'confirm' &&
                         <ConfirmPopup title={this.state.displayedPopup.title} text={this.state.displayedPopup.text}

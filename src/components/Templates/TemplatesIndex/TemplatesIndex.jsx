@@ -1,16 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { TemplateBrief } from "./TemplateBrief";
+import { Loading } from '../../Loading/Loading'
 
 export class TemplatesIndex extends React.Component
 {
-    constructor(props)
+    componentDidMount()
     {
-        super(props);
-        
-        this.state = {
-            templates: this.props.templates
-        }
+        this.props.onRefresh();
     }
 
     render()
@@ -22,12 +19,13 @@ export class TemplatesIndex extends React.Component
                 <h2>Your templates</h2>
                 <div className='pod-container'>
                     {
-                        this.state.templates.map((v,i) => {
+                        this.props.loaded ?
+                        this.props.templates.map((v,i) => {
                             return <TemplateBrief key={i} name={v.name} type={v.type} up={v.up}/>
-                        })
+                        }) : <Loading/>
                     }
                     {
-                        (this.state.templates.length === 0) &&
+                        this.props.loaded && (this.props.templates.length === 0) &&
                         <div className='empty'>Nothing to see here...</div>
                     }
                 </div>
