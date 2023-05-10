@@ -9,6 +9,7 @@ import { Templates } from '../Templates/Templates';
 
 import './App.css';
 import { LoginProviders } from '../LoginProviders/LoginProviders';
+import { Info } from '../Info/Info';
 
 export class App extends React.Component
 {
@@ -24,6 +25,7 @@ export class App extends React.Component
                             <Route path='/labs/*' element={<Labs/>}/>
                             <Route path='/templates/*' element={<Templates/>}/>
                             <Route path='/loginProviders/*' element={<LoginProviders/>}/>
+                            <Route path='/about' element={<Info/>}/>
                             <Route path='*' element={<div className='main-elem'>
                                 <h1>Oops!</h1>
                                 <hr/>

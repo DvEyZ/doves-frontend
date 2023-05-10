@@ -10,7 +10,7 @@ export class LoginProviderCreator extends React.Component
         super(props);
 
         this.state = {
-            types: ['guacamole'],
+            types: undefined,
             selectedType: 'guacamole',
 
             editProvider: undefined,
@@ -21,25 +21,31 @@ export class LoginProviderCreator extends React.Component
 
     componentDidMount()
     {
-        if(this.props.edit)
-        {
-            fetch(`${apiUrl}/loginProviders/${this.props.edit}`).then((r) => r.json()).then((res) => {
-                this.setState({
-                    editProvider: {
-                        name: res.name,
-                        type: res.type,
-                        config: res.config,
-                    },
-                    loaded: true
-                });
-            }).catch((e) => {
-                this.setState({error: e});
-            })
-        }
-        else
-        {
-            this.setState({loaded:true})
-        }
+        fetch(`${apiUrl}/about`).then((r) => r.json()).then((res) => {
+            this.setState({types: res.loginProviderTypes})
+        }).then(() => {
+            if(this.props.edit)
+            {
+                fetch(`${apiUrl}/loginProviders/${this.props.edit}`).then((r) => r.json()).then((res) => {
+                    this.setState({
+                        editProvider: {
+                            name: res.name,
+                            type: res.type,
+                            config: res.config,
+                        },
+                        loaded: true
+                    });
+                }).catch((e) => {
+                    this.setState({error: e});
+                })
+            }
+            else
+            {
+                this.setState({loaded:true})
+            }
+        }).catch((e) => {
+            this.setState({error: e});
+        })
     }
 
     submit = (e) => {

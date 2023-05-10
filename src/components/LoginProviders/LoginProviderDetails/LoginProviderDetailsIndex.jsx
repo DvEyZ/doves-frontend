@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { ConfirmPopup } from "../../Popups/ConfirmPopup";
 import { apiUrl } from "../../../configs/api";
 import { Loading } from "../../Loading/Loading"
@@ -13,6 +13,7 @@ export class LoginProviderDetailsIndex extends React.Component
         this.state = {
             loaded: false,
             error: false,
+            escape: false
         }
     }
 
@@ -38,7 +39,9 @@ export class LoginProviderDetailsIndex extends React.Component
                 onConfirm: () => {
                     this.setState({displayedPopup: null});
                     // Delete
-                    fetch(`${apiUrl}/loginProviders/${this.props.name}`, {method:'DELETE'})
+                    fetch(`${apiUrl}/loginProviders/${this.props.name}`, {method:'DELETE'}).then(() => {
+                        this.setState({escape: true})
+                    })
                 },
                 onCancel: () => {
                     this.setState({displayedPopup: null})
@@ -49,6 +52,12 @@ export class LoginProviderDetailsIndex extends React.Component
 
     render()
     {
+        if(this.state.escape)
+        {
+            return(
+                <Navigate to='/loginProviders'/>
+            )
+        }
         return(
             <div>
                 <div style={{display:'flex', paddingTop:'2rem', columnGap:'1rem', alignItems:'center'}}>

@@ -26,9 +26,9 @@ export class TemplateCreator extends React.Component
 
     componentDidMount()
     {
-        fetch(`${apiUrl}/about/labTypes`).then((r) => r.json()).then((res) => {
+        fetch(`${apiUrl}/about`).then((r) => r.json()).then((res) => {
             this.setState({
-                types: res.labTypes
+                types: res.labTypes.map((v) => v.name)
             })
         }).then(() => {
             if(this.props.edit)

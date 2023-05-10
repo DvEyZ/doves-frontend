@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { ConfirmPopup } from "../../Popups/ConfirmPopup";
 import { apiUrl } from "../../../configs/api";
 import { Loading } from "../../Loading/Loading";
@@ -16,7 +16,8 @@ export class TemplateDetailsIndex extends React.Component
             supplement: undefined,
 
             loaded: false,
-            error: false
+            error: false,
+            escape: false,
         }
     }
 
@@ -41,7 +42,9 @@ export class TemplateDetailsIndex extends React.Component
                 text: `You are about to delete template ${this.props.name}. This action cannot be undone. Proceed?`,
                 onConfirm: () => {
                     this.setState({displayedPopup: null});
-                    fetch(`${apiUrl}/templates/${this.props.name}`, {method:'DELETE'})
+                    fetch(`${apiUrl}/templates/${this.props.name}`, {method:'DELETE'}).then(() => {
+                        this.setState({escape: true})
+                    })
                 },
                 onCancel: () => {
                     this.setState({displayedPopup: null})
@@ -52,6 +55,10 @@ export class TemplateDetailsIndex extends React.Component
 
     render()
     {
+        if(this.state.escape)
+        {
+            return(<Navigate to='/templates'/>);
+        }
         return(
             <div>
                 <div style={{display:'flex', paddingTop:'2rem', columnGap:'1rem', alignItems:'center'}}>
