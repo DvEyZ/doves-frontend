@@ -8,6 +8,7 @@ import { apiUrl } from '../../../configs/api'
 import './TemplateCreator.css'
 import { ErrorPopup } from "../../Popups/ErrorPopup";
 import { Loading } from "../../Loading/Loading";
+import { LoadingError } from "../../Error/LoadingError";
 
 export class TemplateCreator extends React.Component
 {
@@ -123,6 +124,8 @@ export class TemplateCreator extends React.Component
 
     render()
     {
+        if(this.state.error)
+            return <LoadingError error={this.state.error}/>
         return(
             <div>
                 <h1>{ !!this.state.editTemplate ? 'Edit' : 'Create'} template</h1>

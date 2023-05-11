@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { apiUrl } from "../../../configs/api";
 import { Loading } from '../../Loading/Loading'
+import { LoadingError } from '../../Error/LoadingError'
 
 export class LoginProviderCreator extends React.Component
 {
@@ -82,6 +83,9 @@ export class LoginProviderCreator extends React.Component
 
     render()
     {
+        if(this.state.error)
+            return <LoadingError error={this.state.error}/>
+            
         return(
             <div>
                 <h1>{this.props.edit ? 'Edit' : 'Register'} login provider</h1>

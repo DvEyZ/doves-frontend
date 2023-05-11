@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { TemplateBrief } from "./TemplateBrief";
-import { Loading } from '../../Loading/Loading'
+import { Loading } from '../../Loading/Loading';
+import { LoadingError } from "../../Error/LoadingError";
 
 export class TemplatesIndex extends React.Component
 {

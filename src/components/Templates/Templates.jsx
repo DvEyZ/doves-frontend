@@ -4,6 +4,7 @@ import { TemplatesIndex } from "./TemplatesIndex/TemplatesIndex";
 import { TemplateCreator } from "./TemplateCreator/TemplateCreator";
 import { TemplateDetails } from "./TemplateDetails/TemplateDetails";
 import { apiUrl } from '../../configs/api';
+import { LoadingError } from "../Error/LoadingError";
 
 export class Templates extends React.Component
 {
@@ -37,6 +38,8 @@ export class Templates extends React.Component
 
     render()
     {
+        if(this.state.error) 
+            return <div className="main-elem"><LoadingError error={this.state.error}/></div>
         return(
             <div id='templates' className='main-elem'>
                 <Routes>

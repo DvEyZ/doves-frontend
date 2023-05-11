@@ -1,0 +1,5 @@
+.error-explanation {
+    background-color: rgb(134, 55, 55);
+    border-left: 8px solid rgb(190, 0, 0);
+    padding:5px;
+}

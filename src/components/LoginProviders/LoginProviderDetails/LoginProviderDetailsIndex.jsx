@@ -2,7 +2,8 @@ import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { ConfirmPopup } from "../../Popups/ConfirmPopup";
 import { apiUrl } from "../../../configs/api";
-import { Loading } from "../../Loading/Loading"
+import { Loading } from "../../Loading/Loading";
+import { LoadingError } from '../../Error/LoadingError'
 
 export class LoginProviderDetailsIndex extends React.Component
 {
@@ -26,7 +27,7 @@ export class LoginProviderDetailsIndex extends React.Component
                 loaded: true
             });
         }).catch((e) => {
-            this.setState({loaded: true, error: e});
+            this.setState({error: e});
         })
     }
 
@@ -58,6 +59,8 @@ export class LoginProviderDetailsIndex extends React.Component
                 <Navigate to='/loginProviders'/>
             )
         }
+        if(this.state.error)
+            return <LoadingError error={this.state.error}/>
         return(
             <div>
                 <div style={{display:'flex', paddingTop:'2rem', columnGap:'1rem', alignItems:'center'}}>

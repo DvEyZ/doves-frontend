@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { ConfirmPopup } from "../../Popups/ConfirmPopup";
 import { apiUrl } from "../../../configs/api";
 import { Loading } from "../../Loading/Loading";
+import { LoadingError } from '../../Error/LoadingError'
 
 export class TemplateDetailsIndex extends React.Component
 {
@@ -59,6 +60,8 @@ export class TemplateDetailsIndex extends React.Component
         {
             return(<Navigate to='/templates'/>);
         }
+        if(this.state.error)
+            return <LoadingError error={this.state.error}/>
         return(
             <div>
                 <div style={{display:'flex', paddingTop:'2rem', columnGap:'1rem', alignItems:'center'}}>

@@ -1,6 +1,7 @@
 import React from "react";
 import { apiUrl } from "../../configs/api";
 import { Loading } from "../Loading/Loading";
+import { LoadingError } from '../Error/LoadingError'
 
 import packageJson from '../../../package.json'
 
@@ -29,6 +30,8 @@ export class Info extends React.Component
 
     render()
     {
+        if(this.state.error) 
+            return <div className="main-elem"><LoadingError error={this.state.error}/></div>
         return(
             <div className="main-elem">
                 <h1>Info</h1>

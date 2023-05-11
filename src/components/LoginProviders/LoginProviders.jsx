@@ -4,6 +4,7 @@ import { LoginProviderIndex } from "./LoginProviderIndex/LoginProviderIndex";
 import { LoginProviderDetails } from "./LoginProviderDetails/LoginProviderDetails";
 import { LoginProviderCreator } from "./LoginProviderCreator/LoginProviderCreator";
 import { apiUrl } from "../../configs/api";
+import { LoadingError } from "../Error/LoadingError";
 
 export class LoginProviders extends React.Component
 {
@@ -33,6 +34,8 @@ export class LoginProviders extends React.Component
 
     render()
     {
+        if(this.state.error) 
+            return <div className="main-elem"><LoadingError error={this.state.error}/></div>
         return(
             <div id='login-providers' className='main-elem'>
                 <Routes>
