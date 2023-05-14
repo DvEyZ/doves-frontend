@@ -60,7 +60,7 @@ export class Info extends React.Component
                                 <div className='summary-cell summary-key dark'>Supported lab types</div>
                                 <div className='summary-cell summary-value dark'>
                                     {this.state.backendInfo.labTypes.map((v,i) => 
-                                        <div key={i}>{v.name}</div>
+                                        <div key={i}>{v}</div>
                                     )}
                                 </div>
                                 <div className='summary-cell summary-key light'>Supported login providers</div>

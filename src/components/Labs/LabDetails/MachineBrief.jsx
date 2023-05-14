@@ -1,16 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { apiUrl } from "../../../configs/api";
 
 export class MachineBrief extends React.Component
 {
-    start = () => 
+    startMachine = () => 
     {
-        setTimeout(() => {}, 1000);
+        fetch(`${apiUrl}/labs/${this.props.lab}/machines/${this.props.name}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                action: 'start'
+            })
+        }).then((r) => { this.props.onRefresh(); })
     }
 
-    stop = () =>
+    stopMachine = () =>
     {
-        setTimeout(() => {}, 1000);
+        fetch(`${apiUrl}/labs/${this.props.lab}/machines/${this.props.name}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                action: 'stop'
+            })
+        }).then((r) => { this.props.onRefresh(); })
     }
 
     render()
@@ -25,10 +42,10 @@ export class MachineBrief extends React.Component
                 `}>{this.props.status}</div>
                 <div style={{display:'inline', margin:'auto'}}></div>
                 <button className='pod-element-button'>
-                    <div className='link' onClick={() => {this.start()}}><img src='/img/icons/start.svg' alt='start'/></div>
+                    <div className='link' onClick={() => {this.startMachine()}}><img src='/img/icons/start.svg' alt='start'/></div>
                 </button>
                 <button className='pod-element-button'>
-                    <div className='link' onClick={() => {this.stop()}}><img src='/img/icons/stop.svg' alt='stop'/></div>
+                    <div className='link' onClick={() => {this.stopMachine()}}><img src='/img/icons/stop.svg' alt='stop'/></div>
                 </button>
                 <Link className='link' to={this.props.name}><img src='/img/icons/go.svg' alt='go'/></Link>
             </div>

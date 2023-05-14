@@ -2,15 +2,13 @@ import React from "react";
 import { LabBrief } from "./LabBrief";
 import { Link } from "react-router-dom";
 import './LabIndex.css'
+import { Loading } from "../../Loading/Loading";
 
 export class LabIndex extends React.Component
 {
-    constructor(props)
+    componentDidMount()
     {
-        super(props);
-        this.state = {
-            labs: this.props.labs,
-        }
+        this.props.onRefresh();
     }
 
     render()
@@ -22,12 +20,18 @@ export class LabIndex extends React.Component
                 <h2>Your labs</h2>
                 <div className='pod-container'>
                     {
-                        this.state.labs.map((v,i) => {
+                        !this.props.loaded &&
+                        <Loading/>
+                    }
+                    {
+                        this.props.loaded &&
+                        this.props.labs.map((v,i) => {
                             return <LabBrief key={i} name={v.name} type={v.type} up={v.up}/>
                         })
                     }
                     {
-                        (this.state.labs.length === 0) &&
+                        this.props.loaded &&
+                        (this.props.labs.length === 0) &&
                         <div className='empty'>Nothing to see here...</div>
                     }
                 </div>

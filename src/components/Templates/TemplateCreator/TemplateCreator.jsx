@@ -29,7 +29,7 @@ export class TemplateCreator extends React.Component
     {
         fetch(`${apiUrl}/about`).then((r) => r.json()).then((res) => {
             this.setState({
-                types: res.labTypes.map((v) => v.name)
+                types: res.labTypes
             })
         }).then(() => {
             if(this.props.edit)
