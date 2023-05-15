@@ -56,7 +56,7 @@ export class MachineDetails extends React.Component
             body: JSON.stringify({
                 action: 'start'
             })
-        }).then((r) => { this.fetchMachine(r.json()); });
+        }).then((r) => { this.fetchMachine(r.json()); this.props.onRefresh(); });
     }
 
     stopMachine = () => {
@@ -68,7 +68,7 @@ export class MachineDetails extends React.Component
             body: JSON.stringify({
                 action: 'stop'
             })
-        }).then((r) => { this.fetchMachine(r.json()); });
+        }).then((r) => { this.fetchMachine(r.json()); this.props.onRefresh(); });
     }
 
     restartMachine = () => {
@@ -80,7 +80,7 @@ export class MachineDetails extends React.Component
             body: JSON.stringify({
                 action: 'restart'
             })
-        }).then((r) => { this.fetchMachine(r.json()); });
+        }).then((r) => { this.fetchMachine(r.json()); this.props.onRefresh(); });
     }
 
     render()

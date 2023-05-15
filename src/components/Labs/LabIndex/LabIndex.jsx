@@ -26,7 +26,7 @@ export class LabIndex extends React.Component
                     {
                         this.props.loaded &&
                         this.props.labs.map((v,i) => {
-                            return <LabBrief key={i} name={v.name} type={v.type} up={v.up}/>
+                            return <LabBrief key={i} name={v.name} type={v.type} up={v.up} onRefresh={() => {this.props.onRefresh()}}/>
                         })
                     }
                     {

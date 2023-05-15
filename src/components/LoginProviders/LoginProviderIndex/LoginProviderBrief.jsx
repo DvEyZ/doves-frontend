@@ -7,7 +7,7 @@ export class LoginProviderBrief extends React.Component
     {
         return(
             <div className='lab-brief'>
-                <img src={`/img/icons/${this.props.type}-login-provider.svg`} alt={this.props.type}/>
+                <img src={`/img/icons/${this.props.type}-login-provider.svg`} alt={this.props.type} style={{width:'2.5rem',height:'auto'}}/>
                 <div>{this.props.name}</div>
                 <div style={{display:'inline', margin:'auto'}}></div>
                 <Link className='link' to={`${this.props.name}/edit`}><img src='/img/icons/edit.svg' alt='edit'/></Link>

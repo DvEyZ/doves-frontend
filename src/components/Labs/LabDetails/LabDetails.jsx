@@ -57,7 +57,8 @@ export class LabDetails extends React.Component
                 {
                     this.state.loaded &&
                     this.state.machines.map((v,i) => {
-                        return <Route key={i} path={v.name} element={<MachineDetails name={v.name} lab_name={this.state.name}/>}/>;
+                        return <Route key={i} path={v.name} element={<MachineDetails name={v.name} lab_name={this.state.name} 
+                        onRefresh={(s) => {this.fetchLabDetails(s)}}/>}/>;
                     })
                 }
             </Routes>

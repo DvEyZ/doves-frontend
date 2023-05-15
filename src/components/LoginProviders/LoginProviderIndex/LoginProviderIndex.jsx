@@ -2,7 +2,6 @@ import React from "react";
 import { LoginProviderBrief } from "./LoginProviderBrief";
 import { Link } from "react-router-dom";
 import { Loading } from "../../Loading/Loading";
-import { LoadingError } from "../../Error/LoadingError";
 
 export class LoginProviderIndex extends React.Component
 {
