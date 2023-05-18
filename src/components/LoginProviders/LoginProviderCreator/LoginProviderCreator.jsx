@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { apiUrl } from "../../../configs/api";
 import { Loading } from '../../Loading/Loading'
 import { LoadingError } from '../../Error/LoadingError'
+import { ContextNotifications } from '../../../utils/ContextNotifiations'
 
 export class LoginProviderCreator extends React.Component
 {
@@ -70,15 +71,24 @@ export class LoginProviderCreator extends React.Component
             }
         }
 
+        let prom;
         if(!this.props.edit)    // New provider
         {
-            fetch(`${apiUrl}/loginProviders`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
+            prom = fetch(`${apiUrl}/loginProviders`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
         }
         else    // Update provider
         {
-            fetch(`${apiUrl}/loginProviders/${this.state.editProvider.name}`, 
+            prom = fetch(`${apiUrl}/loginProviders/${this.state.editProvider.name}`, 
                 {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
         }
+
+        this.context.addNotification({
+            title: `${data.name}`,
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            pendingText: `Creating login provider ${data.name}...`,
+            fulfilledText: `Login provider ${data.name} ${!!this.props.edit ? 'updated' : 'created'}.`,
+            rejectedText: `Failed to ${!!this.props.edit ? 'update' : 'create'} login provider ${data.name}`
+        });
     }
 
     render()
@@ -152,3 +162,5 @@ export class LoginProviderCreator extends React.Component
         );
     }
 }
+
+LoginProviderCreator.contextType = ContextNotifications;

@@ -4,6 +4,7 @@ import { ConfirmPopup } from "../../Popups/ConfirmPopup";
 import { apiUrl } from "../../../configs/api";
 import { Loading } from "../../Loading/Loading";
 import { LoadingError } from '../../Error/LoadingError'
+import { ContextNotifications } from "../../../utils/ContextNotifiations";
 
 export class TemplateDetailsIndex extends React.Component
 {
@@ -43,9 +44,17 @@ export class TemplateDetailsIndex extends React.Component
                 text: `You are about to delete template ${this.props.name}. This action cannot be undone. Proceed?`,
                 onConfirm: () => {
                     this.setState({displayedPopup: null});
-                    fetch(`${apiUrl}/templates/${this.props.name}`, {method:'DELETE'}).then(() => {
-                        this.setState({escape: true})
-                    })
+                    let prom = fetch(`${apiUrl}/templates/${this.props.name}`, {method:'DELETE'}).then((v) => {
+                        this.setState({escape: true});
+                        return v;
+                    });
+                    this.context.addNotification({
+                        title: `${this.props.name}`,
+                        promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+                        pendingText: `Deleting  template ${this.props.name}...`,
+                        fulfilledText: `Template ${this.props.name} deleted.`,
+                        rejectedText: `Failed to delete template ${this.props.name}`
+                    });
                 },
                 onCancel: () => {
                     this.setState({displayedPopup: null})
@@ -133,3 +142,5 @@ export class TemplateDetailsIndex extends React.Component
         );
     }
 }
+
+TemplateDetailsIndex.contextType = ContextNotifications;

@@ -5,6 +5,7 @@ import { apiUrl } from '../../../configs/api'
 import '../../App/Forms.css'
 import { LoadingError } from "../../Error/LoadingError";
 import { Loading } from "../../Loading/Loading";
+import { ContextNotifications } from "../../../utils/ContextNotifiations";
 
 export class LabCreator extends React.Component
 {
@@ -56,13 +57,21 @@ export class LabCreator extends React.Component
         data.portPrefix = Number(f.get('port_prefix'));
         data.loginProviders = f.getAll('login_provider')
         
-        fetch(`${apiUrl}/labs`, {
+        let prom = fetch(`${apiUrl}/labs`, {
             method:'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        })
+        });
+
+        this.context.addNotification({
+            title: `${data.name}`,
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            pendingText: `Creating lab ${data.name}...`,
+            fulfilledText: `Lab ${data.name} created.`,
+            rejectedText: `Failed to create lab ${data.name}`
+        });
     }
 
     render()
@@ -126,7 +135,7 @@ export class LabCreator extends React.Component
                                     <fieldset style={{border:'0', margin:'0', padding:'0', paddingTop:'0.2rem'}}>
                                         {
                                             this.state.loginProviders.map((v,i) => {
-                                                return <div style={{display:'inline-flex', marginTop:'2px', marginBottom:'2px'}} key={i}>
+                                                return <div style={{display:'flex', marginTop:'2px', marginBottom:'2px'}} key={i}>
                                                     <input type="checkbox" name='login_provider' defaultChecked
                                                     style={{width:'1rem', height:'1rem'}} value={v.name}/>
                                                     <img style={{width:'1.5rem', height:'1.5rem', paddingRight:'2px'}} 
@@ -152,3 +161,5 @@ export class LabCreator extends React.Component
         );
     }
 }
+
+LabCreator.contextType = ContextNotifications;

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { LoadingError } from "../../../Error/LoadingError";
 import { Loading } from "../../../Loading/Loading";
 import { apiUrl } from "../../../../configs/api";
+import { ContextNotifications } from "../../../../utils/ContextNotifiations";
 
 export class MachineDetails extends React.Component
 {
@@ -48,7 +49,7 @@ export class MachineDetails extends React.Component
     }
 
     startMachine = () => {
-        fetch(`${apiUrl}/labs/${this.props.lab_name}/machines/${this.props.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.lab_name}/machines/${this.props.name}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -56,11 +57,19 @@ export class MachineDetails extends React.Component
             body: JSON.stringify({
                 action: 'start'
             })
-        }).then((r) => { this.fetchMachine(r.json()); this.props.onRefresh(); });
+        }).then((r) => { this.fetchMachine(r.json()); this.props.onRefresh(); return r; });
+
+        this.context.addNotification({
+            title: `${this.props.name}`,
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            pendingText: `Starting machine ${this.props.lab_name}/${this.props.name}...`,
+            fulfilledText: `Machine ${this.props.lab_name}/${this.props.name} started.`,
+            rejectedText: `Failed to start machine ${this.props.lab_name}/${this.props.name}`
+        });
     }
 
     stopMachine = () => {
-        fetch(`${apiUrl}/labs/${this.props.lab_name}/machines/${this.props.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.lab_name}/machines/${this.props.name}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,11 +77,19 @@ export class MachineDetails extends React.Component
             body: JSON.stringify({
                 action: 'stop'
             })
-        }).then((r) => { this.fetchMachine(r.json()); this.props.onRefresh(); });
+        }).then((r) => { this.fetchMachine(r.json()); this.props.onRefresh(); return r; });
+
+        this.context.addNotification({
+            title: `${this.props.name}`,
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            pendingText: `Stopping machine ${this.props.lab_name}/${this.props.name}...`,
+            fulfilledText: `Machine ${this.props.lab_name}/${this.props.name} stop.`,
+            rejectedText: `Failed to stop machine ${this.props.lab_name}/${this.props.name}`
+        });
     }
 
     restartMachine = () => {
-        fetch(`${apiUrl}/labs/${this.props.lab_name}/machines/${this.props.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.lab_name}/machines/${this.props.name}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -80,7 +97,15 @@ export class MachineDetails extends React.Component
             body: JSON.stringify({
                 action: 'restart'
             })
-        }).then((r) => { this.fetchMachine(r.json()); this.props.onRefresh(); });
+        }).then((r) => { this.fetchMachine(r.json()); this.props.onRefresh(); return r; });
+
+        this.context.addNotification({
+            title: `${this.props.name}`,
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            pendingText: `Resetting machine ${this.props.lab_name}/${this.props.name}...`,
+            fulfilledText: `Machine ${this.props.lab_name}/${this.props.name} reset.`,
+            rejectedText: `Failed to reset machine ${this.props.lab_name}/${this.props.name}`
+        });
     }
 
     render()
@@ -150,3 +175,5 @@ export class MachineDetails extends React.Component
         );
     }
 }
+
+MachineDetails.contextType = ContextNotifications;

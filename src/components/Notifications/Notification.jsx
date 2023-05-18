@@ -9,7 +9,7 @@ export class Notification extends React.Component
     {
         super(props);
         this.state = {
-            expanded: false
+            expanded: true
         }
     }
 
@@ -24,7 +24,8 @@ export class Notification extends React.Component
                     <h3>{`${
                         this.props.type === 'warning' ? 'Warning' : 
                         this.props.type === 'error' ? 'Error' : 
-                        this.props.type === 'info' ? 'Info' :''}: `}
+                        this.props.type === 'info' ? 'Info' :
+                        this.props.type === 'progress' ? 'Progress' : ''}: `}
                     {this.props.title}</h3>
                     
                     <code className='datetime'>
@@ -37,7 +38,12 @@ export class Notification extends React.Component
                     <code className='desc' style={{...(this.state.expanded ? {} : { display:'none' }) }}>
                         {this.props.description}
                     </code>
-                    <div>Notification issued by <Link className='a-link' to={`/${this.props.activator.type}/${this.props.activator.name}`}>{this.props.activator.name}</Link>.</div>
+                    {
+                        this.props.activator &&
+                        <div>Notification issued by <Link className='a-link' 
+                        to={`/${this.props.activator.type}/${this.props.activator.name}`}>{this.props.activator.name}</Link>.
+                        </div>
+                    }
                 </div>
                 <div className='notification-icon-container notification-icon-container-close' onClick={() => {this.props.onClose()}}>
                     <img src='/img/icons/close.svg' alt='close'/>

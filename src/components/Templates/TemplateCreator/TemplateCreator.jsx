@@ -9,6 +9,7 @@ import './TemplateCreator.css'
 import { ErrorPopup } from "../../Popups/ErrorPopup";
 import { Loading } from "../../Loading/Loading";
 import { LoadingError } from "../../Error/LoadingError";
+import { ContextNotifications } from "../../../utils/ContextNotifiations";
 
 export class TemplateCreator extends React.Component
 {
@@ -112,14 +113,25 @@ export class TemplateCreator extends React.Component
             }))
         }
 
+        let prom;
+
         if(!this.props.edit)    // new template
         {
-            fetch(`${apiUrl}/templates`, {method:'POST',headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
+            prom = fetch(`${apiUrl}/templates`, {method:'POST',headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
         }
         else
         {
-            fetch(`${apiUrl}/templates/${this.state.editTemplate.name}`, {method:'PUT',headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)})
+            prom = fetch(`${apiUrl}/templates/${this.state.editTemplate.name}`, {method:'PUT',headers:{'Content-Type':'application/json'}, 
+            body: JSON.stringify(data)})
         }
+
+        this.context.addNotification({
+            title: `${data.name}`,
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            pendingText: `Creating template ${data.name}...`,
+            fulfilledText: `Template ${data.name} ${!!this.props.edit ? 'updated' : 'created'}.`,
+            rejectedText: `Failed to ${!!this.props.edit ? 'update' : 'create'} template ${data.name}`
+        });
     }
 
     render()
@@ -202,3 +214,5 @@ export class TemplateCreator extends React.Component
         );
     }
 }
+
+TemplateCreator.contextType = ContextNotifications;

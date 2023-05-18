@@ -114,3 +114,11 @@ html,body {
 .a-link:hover {
     background-color: rgba(52, 105, 139, 0.5);
 }
+
+#notification-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 5px;
+    width: 25%;
+}

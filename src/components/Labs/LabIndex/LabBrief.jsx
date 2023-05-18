@@ -2,11 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { apiUrl } from "../../../configs/api";
 
+import { ContextNotifications } from '../../../utils/ContextNotifiations'
+
 export class LabBrief extends React.Component
 {
     startLab = () =>
     {
-        fetch(`${apiUrl}/labs/${this.props.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.name}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -14,12 +16,20 @@ export class LabBrief extends React.Component
             body: JSON.stringify({
                 action: 'start'
             })
-        }).then((r) => { this.props.onRefresh(r.json()); })
+        }).then((r) => { this.props.onRefresh(r.json()); return r; })
+
+        this.context.addNotification({
+            title: `${this.props.name}`,
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            pendingText: `Starting lab ${this.props.name}...`,
+            fulfilledText: `Lab ${this.props.name} started.`,
+            rejectedText: `Failed to start lab ${this.props.name}`
+        });
     }
 
     stopLab = () =>
     {
-        fetch(`${apiUrl}/labs/${this.props.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.name}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,7 +37,15 @@ export class LabBrief extends React.Component
             body: JSON.stringify({
                 action: 'stop'
             })
-        }).then((r) => { this.props.onRefresh(r.json()); })
+        }).then((r) => { this.props.onRefresh(r.json()); return r; })
+
+        this.context.addNotification({
+            title: `${this.props.name}`,
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            pendingText: `Stopping lab ${this.props.name}...`,
+            fulfilledText: `Lab ${this.props.name} stopped.`,
+            rejectedText: `Failed to stop lab ${this.props.name}`
+        });
     }
 
     render()
@@ -51,3 +69,5 @@ export class LabBrief extends React.Component
         )
     }
 }
+
+LabBrief.contextType = ContextNotifications;

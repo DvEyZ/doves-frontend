@@ -4,6 +4,7 @@ import { ConfirmPopup } from "../../Popups/ConfirmPopup";
 import { apiUrl } from "../../../configs/api";
 import { Loading } from "../../Loading/Loading";
 import { LoadingError } from '../../Error/LoadingError'
+import { ContextNotifications } from "../../../utils/ContextNotifiations";
 
 export class LoginProviderDetailsIndex extends React.Component
 {
@@ -40,9 +41,17 @@ export class LoginProviderDetailsIndex extends React.Component
                 onConfirm: () => {
                     this.setState({displayedPopup: null});
                     // Delete
-                    fetch(`${apiUrl}/loginProviders/${this.props.name}`, {method:'DELETE'}).then(() => {
-                        this.setState({escape: true})
-                    })
+                    let prom = fetch(`${apiUrl}/loginProviders/${this.props.name}`, {method:'DELETE'}).then((v) => {
+                        this.setState({escape: true});
+                        return v;
+                    });
+                    this.context.addNotification({
+                        title: `${this.props.name}`,
+                        promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+                        pendingText: `Deleting login provider ${this.props.name}...`,
+                        fulfilledText: `Login provider ${this.props.name} deleted.`,
+                        rejectedText: `Failed to delete login provider ${this.props.name}`
+                    });
                 },
                 onCancel: () => {
                     this.setState({displayedPopup: null})
@@ -115,3 +124,5 @@ export class LoginProviderDetailsIndex extends React.Component
         );
     }
 }
+
+LoginProviderDetailsIndex.contextType = ContextNotifications;
