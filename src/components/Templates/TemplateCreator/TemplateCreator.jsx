@@ -127,7 +127,7 @@ export class TemplateCreator extends React.Component
 
         this.context.addNotification({
             title: `${data.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Creating template ${data.name}...`,
             fulfilledText: `Template ${data.name} ${!!this.props.edit ? 'updated' : 'created'}.`,
             rejectedText: `Failed to ${!!this.props.edit ? 'update' : 'create'} template ${data.name}`
@@ -159,8 +159,8 @@ export class TemplateCreator extends React.Component
                                         type: 'confirm',
                                         title: 'Warning!',
                                         text: `You are about to update the template "${this.state.editTemplate.name}".
-                                        If you proceed, all labs based on this template will be rebuilt, resulting in resetting them to base state
-                                        and erasing all user-made changes. Proceed?`,
+                                        Labs based on this template will NOT be rebuilt to match the new template, but they will still link to this page.
+                                        Proceed?`,
                                         onCancel: () => {this.setState({displayedPopup:null})},
                                         onConfirm: () => {this.submit(e);this.setState({displayedPopup:null})}
                                     }

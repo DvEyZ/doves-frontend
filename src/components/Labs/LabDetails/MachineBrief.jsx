@@ -19,7 +19,7 @@ export class MachineBrief extends React.Component
 
         this.context.addNotification({
             title: `${this.props.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Starting machine ${this.props.lab}/${this.props.name}...`,
             fulfilledText: `Machine ${this.props.lab}/${this.props.name} started.`,
             rejectedText: `Failed to start machine ${this.props.lab}/${this.props.name}`
@@ -40,7 +40,7 @@ export class MachineBrief extends React.Component
 
         this.context.addNotification({
             title: `${this.props.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Stopping machine ${this.props.lab}/${this.props.name}...`,
             fulfilledText: `Machine ${this.props.lab}/${this.props.name} stopped.`,
             rejectedText: `Failed to stop machine ${this.props.lab}/${this.props.name}`
@@ -59,12 +59,12 @@ export class MachineBrief extends React.Component
                 `}>{this.props.status}</div>
                 <div style={{display:'inline', margin:'auto'}}></div>
                 <button className='pod-element-button'>
-                    <div className='link' onClick={() => {this.startMachine()}}><img src='/img/icons/start.svg' alt='start'/></div>
+                    <div className='link' onClick={() => {this.startMachine()}}><img src='/img/icons/start.svg' title='Start' alt='start'/></div>
                 </button>
                 <button className='pod-element-button'>
-                    <div className='link' onClick={() => {this.stopMachine()}}><img src='/img/icons/stop.svg' alt='stop'/></div>
+                    <div className='link' onClick={() => {this.stopMachine()}}><img src='/img/icons/stop.svg' title='Stop' alt='stop'/></div>
                 </button>
-                <Link className='link' to={this.props.name}><img src='/img/icons/go.svg' alt='go'/></Link>
+                <Link className='link' to={this.props.name}><img src='/img/icons/go.svg' title='Open' alt='go'/></Link>
             </div>
         );
     }

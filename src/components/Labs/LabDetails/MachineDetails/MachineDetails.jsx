@@ -61,7 +61,7 @@ export class MachineDetails extends React.Component
 
         this.context.addNotification({
             title: `${this.props.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Starting machine ${this.props.lab_name}/${this.props.name}...`,
             fulfilledText: `Machine ${this.props.lab_name}/${this.props.name} started.`,
             rejectedText: `Failed to start machine ${this.props.lab_name}/${this.props.name}`
@@ -81,7 +81,7 @@ export class MachineDetails extends React.Component
 
         this.context.addNotification({
             title: `${this.props.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Stopping machine ${this.props.lab_name}/${this.props.name}...`,
             fulfilledText: `Machine ${this.props.lab_name}/${this.props.name} stop.`,
             rejectedText: `Failed to stop machine ${this.props.lab_name}/${this.props.name}`
@@ -101,7 +101,7 @@ export class MachineDetails extends React.Component
 
         this.context.addNotification({
             title: `${this.props.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Resetting machine ${this.props.lab_name}/${this.props.name}...`,
             fulfilledText: `Machine ${this.props.lab_name}/${this.props.name} reset.`,
             rejectedText: `Failed to reset machine ${this.props.lab_name}/${this.props.name}`

@@ -47,7 +47,7 @@ export class LoginProviderDetailsIndex extends React.Component
                     });
                     this.context.addNotification({
                         title: `${this.props.name}`,
-                        promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+                        promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
                         pendingText: `Deleting login provider ${this.props.name}...`,
                         fulfilledText: `Login provider ${this.props.name} deleted.`,
                         rejectedText: `Failed to delete login provider ${this.props.name}`

@@ -25,7 +25,7 @@ export class Notification extends React.Component
                         this.props.type === 'warning' ? 'Warning' : 
                         this.props.type === 'error' ? 'Error' : 
                         this.props.type === 'info' ? 'Info' :
-                        this.props.type === 'progress' ? 'Progress' : ''}: `}
+                        this.props.type === 'progress' ? 'Pending' : ''}: `}
                     {this.props.title}</h3>
                     
                     <code className='datetime'>

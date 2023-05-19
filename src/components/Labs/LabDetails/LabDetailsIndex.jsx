@@ -34,7 +34,7 @@ export class LabDetailsIndex extends React.Component
 
         this.context.addNotification({
             title: `${this.props.state.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Starting lab ${this.props.state.name}...`,
             fulfilledText: `Lab ${this.props.state.name} started.`,
             rejectedText: `Failed to start lab ${this.props.state.name}`
@@ -55,7 +55,7 @@ export class LabDetailsIndex extends React.Component
 
         this.context.addNotification({
             title: `${this.props.state.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Stopping lab ${this.props.state.name}...`,
             fulfilledText: `Lab ${this.props.state.name} stopped.`,
             rejectedText: `Failed to stop lab ${this.props.state.name}`
@@ -76,7 +76,7 @@ export class LabDetailsIndex extends React.Component
 
         this.context.addNotification({
             title: `${this.props.state.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Rebuilding lab ${this.props.state.name}...`,
             fulfilledText: `Lab ${this.props.state.name} rebuilt.`,
             rejectedText: `Failed to rebuild lab ${this.props.state.name}`
@@ -91,7 +91,7 @@ export class LabDetailsIndex extends React.Component
 
         this.context.addNotification({
             title: `${this.props.state.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Deleting lab ${this.props.state.name}...`,
             fulfilledText: `Lab ${this.props.state.name} deleted.`,
             rejectedText: `Failed to delete lab ${this.props.state.name}`

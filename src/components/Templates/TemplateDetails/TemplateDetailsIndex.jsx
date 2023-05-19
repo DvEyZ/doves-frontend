@@ -50,7 +50,7 @@ export class TemplateDetailsIndex extends React.Component
                     });
                     this.context.addNotification({
                         title: `${this.props.name}`,
-                        promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+                        promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
                         pendingText: `Deleting  template ${this.props.name}...`,
                         fulfilledText: `Template ${this.props.name} deleted.`,
                         rejectedText: `Failed to delete template ${this.props.name}`

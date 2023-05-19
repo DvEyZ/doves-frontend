@@ -84,7 +84,7 @@ export class LoginProviderCreator extends React.Component
 
         this.context.addNotification({
             title: `${data.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Creating login provider ${data.name}...`,
             fulfilledText: `Login provider ${data.name} ${!!this.props.edit ? 'updated' : 'created'}.`,
             rejectedText: `Failed to ${!!this.props.edit ? 'update' : 'create'} login provider ${data.name}`

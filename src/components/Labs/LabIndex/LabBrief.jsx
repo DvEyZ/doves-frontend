@@ -20,7 +20,7 @@ export class LabBrief extends React.Component
 
         this.context.addNotification({
             title: `${this.props.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Starting lab ${this.props.name}...`,
             fulfilledText: `Lab ${this.props.name} started.`,
             rejectedText: `Failed to start lab ${this.props.name}`
@@ -41,7 +41,7 @@ export class LabBrief extends React.Component
 
         this.context.addNotification({
             title: `${this.props.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Stopping lab ${this.props.name}...`,
             fulfilledText: `Lab ${this.props.name} stopped.`,
             rejectedText: `Failed to stop lab ${this.props.name}`
@@ -59,12 +59,12 @@ export class LabBrief extends React.Component
                 `}>{this.props.up}% up</div>
                 <div style={{display:'inline', margin:'auto'}}></div>
                 <button className='pod-element-button'>
-                    <div className='link' onClick={() => {this.startLab()}}><img src='/img/icons/start.svg' alt='start'/></div>
+                    <div className='link' onClick={() => {this.startLab()}}><img src='/img/icons/start.svg' title='Start' alt='start'/></div>
                 </button>
                 <button className='pod-element-button'>
-                    <div className='link' onClick={() => {this.stopLab()}}><img src='/img/icons/stop.svg' alt='stop'/></div>
+                    <div className='link' onClick={() => {this.stopLab()}}><img src='/img/icons/stop.svg' title='Stop' alt='stop'/></div>
                 </button>
-                <Link className='link' to={this.props.name}><img src='/img/icons/go.svg' alt='go'/></Link>
+                <Link className='link' to={this.props.name}><img src='/img/icons/go.svg' title='Open' alt='go'/></Link>
             </div>
         )
     }
