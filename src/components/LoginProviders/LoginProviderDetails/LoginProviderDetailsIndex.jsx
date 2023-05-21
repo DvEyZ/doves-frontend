@@ -98,7 +98,7 @@ export class LoginProviderDetailsIndex extends React.Component
                     <div className='warning-lp-unreachable'>
                         <img src='/img/icons/icon-notification-warning.svg'/>
                         <div>
-                        This login provider is currently unreachable. You might want to check whether the server is up, 
+                        This login provider is currently unavailable. You might want to check whether the server is up, 
                         and whether the credentials you provided are valid.
                         </div>
                     </div>

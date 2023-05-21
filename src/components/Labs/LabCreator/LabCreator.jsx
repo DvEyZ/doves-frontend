@@ -143,7 +143,7 @@ export class LabCreator extends React.Component
                                                     <label style={{fontSize:'inherit', color:'inherit'}}>
                                                         <Link className="a-link" to={`/loginProviders/${v.name}`}>{v.name}</Link>
                                                         {!v.reachable && 
-                                                            <><i style={{color: 'rgb(190, 190, 92)'}}> (down)</i></>
+                                                            <><i style={{color: 'rgb(190, 190, 92)'}}> (unavailable)</i></>
                                                         }
                                                     </label>
                                                 </div>
