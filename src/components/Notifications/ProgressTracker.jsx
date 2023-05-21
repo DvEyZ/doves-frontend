@@ -47,15 +47,40 @@ export class ProgressTracker extends React.Component
                     setTimeout(() => {this.disappear()}, 0)
                 ]
             });
-        }).catch(async (e) => {
-            this.setState({
-                status: 'error',
-                content: `${this.props.rejectedMessage}: ${(await e.json()).message}`,
-                timeouts: [
-                    ...this.state.timeouts,
-                    setTimeout(() => {this.disappear()}, 12000)
-                ]
-            });
+        }).catch((e) => {
+            if(e instanceof Response)
+            {
+                e.json().then((r) => {
+                    this.setState({
+                        status: 'error',
+                        content: `${this.props.rejectedMessage}: ${r.message}`,
+                        timeouts: [
+                            ...this.state.timeouts,
+                            setTimeout(() => {this.disappear()}, 12000)
+                        ]
+                    });
+                }).catch((e) => {
+                    this.setState({
+                        status: 'error',
+                        content: `${this.props.rejectedMessage}: ${e.message}`,
+                        timeouts: [
+                            ...this.state.timeouts,
+                            setTimeout(() => {this.disappear()}, 12000)
+                        ]
+                    });
+                });
+            }
+            else
+            {
+                this.setState({
+                    status: 'error',
+                    content: `${this.props.rejectedMessage}: ${e.message}`,
+                    timeouts: [
+                        ...this.state.timeouts,
+                        setTimeout(() => {this.disappear()}, 12000)
+                    ]
+                });
+            }
         });
     }
 

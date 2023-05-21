@@ -6,6 +6,8 @@ import { Loading } from "../../Loading/Loading";
 import { LoadingError } from '../../Error/LoadingError'
 import { ContextNotifications } from "../../../utils/ContextNotifiations";
 
+import './LoginProviderDetails.css'
+
 export class LoginProviderDetailsIndex extends React.Component
 {
     constructor(props)
@@ -25,6 +27,7 @@ export class LoginProviderDetailsIndex extends React.Component
             this.setState({
                 type: res.type,
                 config: res.config,
+                reachable: res.reachable,
                 loaded: true
             });
         }).catch((e) => {
@@ -90,6 +93,16 @@ export class LoginProviderDetailsIndex extends React.Component
                 </div>
                 <div><Link to='../../' className='a-link'>&lt;&lt;&lt; Back to Login providers</Link></div>
                 <hr/>
+                {
+                    this.state.loaded && !this.state.reachable &&
+                    <div className='warning-lp-unreachable'>
+                        <img src='/img/icons/icon-notification-warning.svg'/>
+                        <div>
+                        This login provider is currently unreachable. You might want to check whether the server is up, 
+                        and whether the credentials you provided are valid.
+                        </div>
+                    </div>
+                }
                 {
                     this.state.loaded ?
                     <div className="lab-details-container">

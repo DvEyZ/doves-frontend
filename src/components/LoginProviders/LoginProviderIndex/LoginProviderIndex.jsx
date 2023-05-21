@@ -21,7 +21,7 @@ export class LoginProviderIndex extends React.Component
                     {
                         this.props.loaded ?
                         this.props.loginProviders.map((v,i) => 
-                            <LoginProviderBrief key={i} name={v.name} type={v.type}/>
+                            <LoginProviderBrief key={i} name={v.name} type={v.type} reachable={v.reachable}/>
                         )
                         : <Loading/>
                     }

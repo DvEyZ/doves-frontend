@@ -136,12 +136,15 @@ export class LabCreator extends React.Component
                                         {
                                             this.state.loginProviders.map((v,i) => {
                                                 return <div style={{display:'flex', marginTop:'2px', marginBottom:'2px'}} key={i}>
-                                                    <input type="checkbox" name='login_provider' defaultChecked
+                                                    <input type="checkbox" name='login_provider' defaultChecked={v.reachable} disabled={!v.reachable}
                                                     style={{width:'1rem', height:'1rem'}} value={v.name}/>
                                                     <img style={{width:'1.5rem', height:'1.5rem', paddingRight:'2px'}} 
                                                         src={`/img/icons/${v.type}-login-provider.svg`} alt=''/>
                                                     <label style={{fontSize:'inherit', color:'inherit'}}>
                                                         <Link className="a-link" to={`/loginProviders/${v.name}`}>{v.name}</Link>
+                                                        {!v.reachable && 
+                                                            <><i style={{color: 'rgb(190, 190, 92)'}}> (down)</i></>
+                                                        }
                                                     </label>
                                                 </div>
                                             })
