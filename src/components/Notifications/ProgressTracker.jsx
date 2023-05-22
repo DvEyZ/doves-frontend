@@ -31,7 +31,7 @@ export class ProgressTracker extends React.Component
                 setTimeout(() => {
                     if(this.state.fading)
                         this.props.onClose();
-                }, 3000)
+                }, 2000)
             ]
         });
     }

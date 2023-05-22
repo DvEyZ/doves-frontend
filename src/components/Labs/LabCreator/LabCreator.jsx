@@ -67,7 +67,7 @@ export class LabCreator extends React.Component
 
         this.context.addNotification({
             title: `${data.name}`,
-            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);})}),
+            promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => {rj(e)})}),
             pendingText: `Creating lab ${data.name}...`,
             fulfilledText: `Lab ${data.name} created.`,
             rejectedText: `Failed to create lab ${data.name}`

@@ -83,7 +83,7 @@ export class MachineDetails extends React.Component
             title: `${this.props.name}`,
             promise: new Promise((res, rj) => {prom.then((v) => {if(v.status < 400) res(v); else rj(v);}).catch((e) => rj(e))}),
             pendingText: `Stopping machine ${this.props.lab_name}/${this.props.name}...`,
-            fulfilledText: `Machine ${this.props.lab_name}/${this.props.name} stop.`,
+            fulfilledText: `Machine ${this.props.lab_name}/${this.props.name} stopped.`,
             rejectedText: `Failed to stop machine ${this.props.lab_name}/${this.props.name}`
         });
     }

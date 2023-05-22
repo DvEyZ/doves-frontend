@@ -42,6 +42,7 @@
     display: block;
     padding-left: 5px;
     border-left: 5px solid rgba(0, 0, 0, 0.3);
+    word-wrap:anywhere;
 }
 
 @keyframes fade {
@@ -51,4 +52,32 @@
 
 .nt-fading {
     animation: fade 3s linear;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(1);
+        border: 2px solid rgb(255,255,255,1);
+    }
+    100% {
+        transform: scale(3);
+        border: 2px solid rgb(255,255,255,0);
+    }
+}
+
+.ripple-loading-container {
+    display: flex;
+}
+
+.ripple-loading {
+    color: white;
+    border-radius: 100%;
+    width: 33%;
+    animation: ripple 1s cubic-bezier(.68,-0.55,.27,1.55) infinite;
+}
+
+.ripple-loading::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
 }

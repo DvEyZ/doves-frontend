@@ -7,7 +7,7 @@ export class Loading extends React.Component
     {
         return(
             <div className="loading-container">
-                <div className="loading-wheel" aria-label="loading"></div>
+                <div className="ripple-loading" aria-label="loading"></div>
             </div>
         );
     }

@@ -96,9 +96,9 @@ export class LoginProviderDetailsIndex extends React.Component
                 {
                     this.state.loaded && !this.state.reachable &&
                     <div className='warning-lp-unreachable'>
-                        <img src='/img/icons/icon-notification-warning.svg'/>
+                        <img src='/img/icons/icon-notification-warning.svg' alt=''/>
                         <div>
-                        This login provider is currently unavailable. You might want to check whether the server is up, 
+                        This login provider is currently unavailable. You might want to check whether the server it is located on is up, 
                         and whether the credentials you provided are valid.
                         </div>
                     </div>
