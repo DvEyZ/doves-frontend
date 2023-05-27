@@ -38,13 +38,10 @@ export class Notification extends React.Component
                     <code className='datetime'>
                         {this.props.datetime.toLocaleString()}
                     </code>
-                    <div className='expander' onClick={() => {this.setState({expanded:!this.state.expanded})}}>
-                        {!this.state.expanded? '▸' : '▾'} See more
-                    </div>
 
-                    <code className='desc' style={{...(this.state.expanded ? {} : { display:'none' }) }}>
+                    <span className='desc' style={{...(this.state.expanded ? {} : { display:'none' }) }}>
                         {this.props.description}
-                    </code>
+                    </span>
                     {
                         this.props.activator &&
                         <div>Notification issued by <Link className='a-link' 

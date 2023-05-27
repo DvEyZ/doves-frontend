@@ -22,7 +22,7 @@ export class LabDetailsIndex extends React.Component
 
     startLab = () => 
     {
-        let prom = fetch(`${apiUrl}/labs/${this.props.state.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.state.name}/command`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ export class LabDetailsIndex extends React.Component
 
     stopLab = () =>
     {
-        let prom = fetch(`${apiUrl}/labs/${this.props.state.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.state.name}/command`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ export class LabDetailsIndex extends React.Component
 
     rebuildLab = () =>
     {
-        let prom = fetch(`${apiUrl}/labs/${this.props.state.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.state.name}/command`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

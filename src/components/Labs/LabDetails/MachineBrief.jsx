@@ -7,7 +7,7 @@ export class MachineBrief extends React.Component
 {
     startMachine = () => 
     {
-        let prom = fetch(`${apiUrl}/labs/${this.props.lab}/machines/${this.props.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.lab}/machines/${this.props.name}/command`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export class MachineBrief extends React.Component
 
     stopMachine = () =>
     {
-        let prom = fetch(`${apiUrl}/labs/${this.props.lab}/machines/${this.props.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.lab}/machines/${this.props.name}/command`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

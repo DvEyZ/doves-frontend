@@ -8,7 +8,7 @@ export class LabBrief extends React.Component
 {
     startLab = () =>
     {
-        let prom = fetch(`${apiUrl}/labs/${this.props.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.name}/command`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -29,7 +29,7 @@ export class LabBrief extends React.Component
 
     stopLab = () =>
     {
-        let prom = fetch(`${apiUrl}/labs/${this.props.name}`, {
+        let prom = fetch(`${apiUrl}/labs/${this.props.name}/command`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
